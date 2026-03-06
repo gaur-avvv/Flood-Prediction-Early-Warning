@@ -57,14 +57,8 @@ async def lifespan(app: FastAPI):
 
     # Auto-train on startup if no model exists – store the task so we can
     # await / cancel it cleanly on shutdown instead of being killed mid-train.
-    async def _safe_auto_initialize():
-        try:
-            await model_trainer.auto_initialize()
-        except Exception as exc:
-            logger.warning("auto_initialize failed (non-fatal): %s", exc)
-
     _init_task = asyncio.create_task(
-        _safe_auto_initialize(), name="auto_initialize"
+        model_trainer.auto_initialize(), name="auto_initialize"
     )
 
     # Schedule nightly retraining (02:00 UTC) and hourly data sync
@@ -128,23 +122,13 @@ app.add_middleware(
 @app.get("/health", response_model=HealthResponse, tags=["System"])
 async def health_check():
     """System health and model status."""
-    try:
-        status = await model_trainer.get_status()
-        model_trained = status.get("trained", False)
-        model_accuracy = status.get("accuracy")
-        last_trained = status.get("last_trained")
-        hotspots_mapped = status.get("hotspots_mapped", 0)
-    except Exception:
-        model_trained = False
-        model_accuracy = None
-        last_trained = None
-        hotspots_mapped = 0
+    status = await model_trainer.get_status()
     return HealthResponse(
         status="healthy",
-        model_trained=model_trained,
-        model_accuracy=model_accuracy,
-        last_trained=last_trained,
-        hotspots_mapped=hotspots_mapped,
+        model_trained=status["trained"],
+        model_accuracy=status.get("accuracy"),
+        last_trained=status.get("last_trained"),
+        hotspots_mapped=status.get("hotspots_mapped", 0),
         version="2.0.0",
     )
 
