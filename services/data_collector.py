@@ -27,6 +27,7 @@ logger = logging.getLogger(__name__)
 
 OPEN_METEO_URL = "https://archive-api.open-meteo.com/v1/archive"
 OPEN_METEO_FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
+OPEN_METEO_FLOOD_URL = "https://flood-api.open-meteo.com/v1/flood"
 OPEN_TOPO_URL = "https://api.opentopodata.org/v1/srtm30m"
 SOILGRIDS_URL = "https://rest.isric.org/soilgrids/v2.0/properties/query"
 OVERPASS_URL = "https://overpass-api.de/api/interpreter"
@@ -59,13 +60,25 @@ class DataCollector:
         rainfall_task = asyncio.create_task(
             self._fetch_rainfall_history(lat, lon, start_date, end_date)
         )
+        discharge_task = asyncio.create_task(
+            self._fetch_river_discharge_history(lat, lon, start_date, end_date)
+        )
         dem_task = asyncio.create_task(self._fetch_dem(lat, lon, radius_km))
         soil_task = asyncio.create_task(self._fetch_soil_properties(lat, lon))
         drain_task = asyncio.create_task(self._fetch_drainage_infra(lat, lon, radius_km))
 
-        rainfall_df, dem_data, soil_data, drain_data = await asyncio.gather(
-            rainfall_task, dem_task, soil_task, drain_task
+        rainfall_df, discharge_df, dem_data, soil_data, drain_data = await asyncio.gather(
+            rainfall_task, discharge_task, dem_task, soil_task, drain_task
         )
+
+        # Merge discharge daily data into hourly rainfall data
+        if discharge_df is not None and not discharge_df.empty:
+            rainfall_df["date"] = rainfall_df["date_time"].dt.date
+            rainfall_df = pd.merge(rainfall_df, discharge_df, on="date", how="left")
+            rainfall_df["river_discharge_m3s"] = rainfall_df["river_discharge_m3s"].fillna(0.0)
+            rainfall_df.drop(columns=["date"], inplace=True)
+        else:
+            rainfall_df["river_discharge_m3s"] = 0.0
 
         # Merge into training rows
         df = self._build_training_dataframe(
@@ -118,6 +131,45 @@ class DataCollector:
 
     # ──────────────────────────────────────────────────────────────────────────
     # Fetchers
+
+    async def _fetch_river_discharge_history(
+        self,
+        lat: float,
+        lon: float,
+        start: datetime.date,
+        end: datetime.date,
+    ) -> Optional[pd.DataFrame]:
+        """Fetch historical daily river discharge from Open-Meteo Flood API."""
+        params = {
+            "latitude": lat,
+            "longitude": lon,
+            "start_date": start.isoformat(),
+            "end_date": end.isoformat(),
+            "daily": "river_discharge",
+        }
+        try:
+            async with httpx.AsyncClient(timeout=self._client_timeout) as client:
+                resp = await client.get(OPEN_METEO_FLOOD_URL, params=params)
+                resp.raise_for_status()
+                data = resp.json()
+
+            daily = data.get("daily", {})
+            times = daily.get("time", [])
+            discharges = daily.get("river_discharge", [])
+
+            if not times:
+                return None
+
+            df = pd.DataFrame({
+                "date": pd.to_datetime(times).date,
+                "river_discharge_m3s": discharges,
+            })
+            # Forward fill missing values
+            df["river_discharge_m3s"] = df["river_discharge_m3s"].ffill().fillna(0.0)
+            return df
+        except Exception as e:
+            logger.warning("River discharge history fetch failed: %s", e)
+            return None
 
     async def _fetch_rainfall_history(
         self,
@@ -329,6 +381,21 @@ class DataCollector:
                 data = resp.json()
             current = data.get("current", {})
             hourly = data.get("hourly", {})
+
+            # Also fetch current river discharge
+            flood_params = {
+                "latitude": lat,
+                "longitude": lon,
+                "daily": "river_discharge",
+                "forecast_days": 1,
+                "past_days": 0,
+            }
+            flood_resp = await client.get(OPEN_METEO_FLOOD_URL, params=flood_params)
+            flood_data = flood_resp.json() if flood_resp.status_code == 200 else {}
+            discharge = flood_data.get("daily", {}).get("river_discharge", [0.0])[0]
+            if discharge is None:
+                discharge = 0.0
+
             return {
                 "rainfall_1h_mm": current.get("precipitation", 0),
                 "temperature_c": current.get("temperature_2m", 25),
@@ -339,9 +406,53 @@ class DataCollector:
                 "soil_moisture_pct": (current.get("soil_moisture_0_to_1cm", 0.3) or 0.3) * 100,
                 "hourly_precip_forecast": hourly.get("precipitation", []),
                 "hourly_precip_prob": hourly.get("precipitation_probability", []),
+                "river_discharge_m3s": discharge,
             }
         except Exception as e:
             logger.warning("Current weather fetch failed: %s", e)
+            return {}
+
+    async def fetch_future_conditions(
+        self, lat: float, lon: float, forecast_days: int = 7
+    ) -> Dict[str, Any]:
+        """Fetch forecast weather and river discharge for future prediction."""
+        params = {
+            "latitude": lat,
+            "longitude": lon,
+            "hourly": ",".join([
+                "precipitation",
+                "temperature_2m",
+                "relative_humidity_2m",
+                "wind_speed_10m",
+                "wind_direction_10m",
+                "surface_pressure",
+                "soil_moisture_0_to_1cm",
+            ]),
+            "forecast_days": forecast_days,
+            "timezone": "UTC",
+        }
+        try:
+            async with httpx.AsyncClient(timeout=self._client_timeout) as client:
+                resp = await client.get(OPEN_METEO_FORECAST_URL, params=params)
+                resp.raise_for_status()
+                weather_data = resp.json()
+
+                flood_params = {
+                    "latitude": lat,
+                    "longitude": lon,
+                    "daily": "river_discharge",
+                    "forecast_days": forecast_days,
+                }
+                flood_resp = await client.get(OPEN_METEO_FLOOD_URL, params=flood_params)
+                flood_resp.raise_for_status()
+                flood_data = flood_resp.json()
+
+            return {
+                "weather": weather_data,
+                "flood": flood_data,
+            }
+        except Exception as e:
+            logger.error("Future conditions fetch failed: %s", e)
             return {}
 
     # ──────────────────────────────────────────────────────────────────────────
@@ -475,6 +586,7 @@ class DataCollector:
         df["pressure_hpa"] = 1013 - df["rainfall_1h_mm"] * 0.5 + np.random.randn(n)
         df["evapotranspiration_mm"] = np.abs(np.random.randn(n) + 3)
         df["soil_moisture_pct"] = np.clip(30 + df["rainfall_24h_mm"] * 0.3, 10, 95)
+        df["river_discharge_m3s"] = np.clip(10 + df["rainfall_24h_mm"] * 2 + np.random.randn(n) * 5, 0, 500)
         return df
 
     def _sample_grid(
@@ -515,6 +627,7 @@ class DataCollector:
                     date_time=row["date_time"].to_pydatetime(),
                     rainfall_1h_mm=float(row.get("rainfall_1h_mm", 0) or 0),
                     rainfall_24h_mm=float(row.get("rainfall_24h_mm", 0) or 0),
+                    river_discharge_m3s=float(row.get("river_discharge_m3s", 0) or 0),
                     flood_occurred=int(row.get("flood_occurred", 0)),
                     inundation_depth_m=float(row.get("inundation_depth_m", 0) or 0),
                 )

@@ -45,6 +45,7 @@ def build_feature_vector(req: PredictionRequest) -> pd.DataFrame:
     """
     base = {
         "rainfall_1h_mm": req.rainfall_1h_mm,
+        "river_discharge_m3s": req.river_discharge_m3s,
         "rainfall_3h_mm": req.rainfall_3h_mm,
         "rainfall_6h_mm": req.rainfall_6h_mm,
         "rainfall_24h_mm": req.rainfall_24h_mm,
@@ -109,7 +110,8 @@ def build_feature_vector(req: PredictionRequest) -> pd.DataFrame:
         0.20 * (req.soil_moisture_pct / 100) * 10 +
         0.15 * min(terrain_vuln, 1.0) * 10 +
         0.10 * (req.impervious_surface_pct / 100) * 10 +
-        0.10 * (req.previous_flood_events_5y / max(req.previous_flood_events_5y + 1, 1)) * 10
+        0.10 * (req.previous_flood_events_5y / max(req.previous_flood_events_5y + 1, 1)) * 10 +
+        0.15 * min(req.river_discharge_m3s / 1000.0, 1.0) * 10
     )
 
     base.update(
@@ -163,7 +165,8 @@ def engineer_training_features(df: pd.DataFrame) -> pd.DataFrame:
         0.20 * (df["soil_moisture_pct"] / 100) * 10 +
         0.15 * df["terrain_vulnerability"].clip(upper=1) * 10 +
         0.10 * (df["impervious_surface_pct"] / 100) * 10 +
-        0.10 * (df["previous_flood_events_5y"] / (df["previous_flood_events_5y"] + 1)) * 10
+        0.10 * (df["previous_flood_events_5y"] / (df["previous_flood_events_5y"] + 1)) * 10 +
+        0.15 * (df["river_discharge_m3s"] / 1000.0).clip(upper=1) * 10
     )
 
     return df[FEATURE_COLUMNS]

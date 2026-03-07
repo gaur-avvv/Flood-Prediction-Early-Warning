@@ -291,3 +291,18 @@ async def nowcast(
     if not await model_trainer.is_trained():
         raise HTTPException(status_code=503, detail="Model not yet trained.")
     return await flood_predictor.nowcast(lat, lon, horizon_minutes)
+
+
+@app.get("/predict/future", tags=["Prediction"])
+async def predict_future(
+    lat: float = Query(..., description="Latitude"),
+    lon: float = Query(..., description="Longitude"),
+    forecast_days: int = Query(7, description="Number of days to forecast (up to 14)"),
+):
+    """
+    Future flood prediction for the next few days.
+    Fetches forecast weather and river discharge, then predicts flood risk.
+    """
+    if not await model_trainer.is_trained():
+        raise HTTPException(status_code=503, detail="Model not yet trained.")
+    return await flood_predictor.predict_future(lat, lon, forecast_days)

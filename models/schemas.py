@@ -37,6 +37,7 @@ class PredictionRequest(BaseModel):
 
     # Rainfall factors
     rainfall_1h_mm: float = Field(0.0, ge=0, description="Rainfall last 1 hour (mm)")
+    river_discharge_m3s: float = Field(0.0, ge=0, description="Daily river discharge rate in m³/s")
     rainfall_3h_mm: float = Field(0.0, ge=0, description="Rainfall last 3 hours (mm)")
     rainfall_6h_mm: float = Field(0.0, ge=0, description="Rainfall last 6 hours (mm)")
     rainfall_24h_mm: float = Field(0.0, ge=0, description="Rainfall last 24 hours (mm)")
@@ -148,6 +149,7 @@ class PredictionResponse(BaseModel):
         None, description="Minutes until flooding (nowcast mode)"
     )
     confidence: float = Field(..., description="Model confidence 0–1")
+    overall_confidence: float = Field(..., description="Overall confidence (model + data) 0-1")
     contributing_factors: dict = Field(..., description="SHAP-style factor contributions")
     recommendation: str
     timestamp: datetime
@@ -155,6 +157,7 @@ class PredictionResponse(BaseModel):
 
 class BulkPredictionResponse(BaseModel):
     predictions: List[PredictionResponse]
+    overall_confidence: float = 0.8
     total: int
     high_risk_count: int = 0
     critical_count: int = 0

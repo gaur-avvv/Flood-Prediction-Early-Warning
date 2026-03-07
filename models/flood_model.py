@@ -65,7 +65,7 @@ METADATA_PATH = os.path.join(MODEL_DIR, "metadata.pkl")
 
 # All features in canonical order (must match feature_engineering output)
 FEATURE_COLUMNS = [
-    "rainfall_1h_mm", "rainfall_3h_mm", "rainfall_6h_mm",
+    "rainfall_1h_mm", "river_discharge_m3s", "rainfall_3h_mm", "rainfall_6h_mm",
     "rainfall_24h_mm", "rainfall_48h_mm", "rainfall_72h_mm",
     "rainfall_intensity", "antecedent_precip_index",
     "elevation_m", "slope_degrees", "aspect_degrees", "curvature",

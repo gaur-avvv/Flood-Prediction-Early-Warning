@@ -143,11 +143,14 @@ def _contributing_factors(X_row: pd.Series) -> dict:
     elev = X_row.get("elevation_m", 15)
     imp = X_row.get("impervious_surface_pct", 50)
 
-    factors["rainfall_24h"] = round(min(r24 / 100, 1.0) * 0.35, 3)
-    factors["drainage_deficit"] = round((1 - drain / 100) * 0.25, 3)
-    factors["soil_saturation"] = round(sm / 100 * 0.20, 3)
-    factors["low_elevation"] = round(max(0, (20 - elev) / 20) * 0.12, 3)
-    factors["imperviousness"] = round(imp / 100 * 0.08, 3)
+    discharge = X_row.get("river_discharge_m3s", 0)
+
+    factors["rainfall_24h"] = round(min(r24 / 100, 1.0) * 0.30, 3)
+    factors["river_discharge"] = round(min(discharge / 1000.0, 1.0) * 0.25, 3)
+    factors["drainage_deficit"] = round((1 - drain / 100) * 0.20, 3)
+    factors["soil_saturation"] = round(sm / 100 * 0.15, 3)
+    factors["low_elevation"] = round(max(0, (20 - elev) / 20) * 0.05, 3)
+    factors["imperviousness"] = round(imp / 100 * 0.05, 3)
     return {k: v for k, v in sorted(factors.items(), key=lambda x: -x[1])}
 
 
@@ -174,6 +177,7 @@ class FloodPredictor:
             estimated_inundation_depth_m=round(dep, 3),
             predicted_flood_onset_minutes=None,
             confidence=round(confidence, 3),
+            overall_confidence=round(confidence, 3),
             contributing_factors=factors,
             recommendation=_recommendation(prob, dep, factors),
             timestamp=datetime.now(timezone.utc),
@@ -202,6 +206,7 @@ class FloodPredictor:
                     flood_risk_level=_risk_level(prob),
                     estimated_inundation_depth_m=round(dep, 3),
                     confidence=round(0.7 + 0.25 * prob, 3),
+                    overall_confidence=round(0.7 + 0.25 * prob, 3),
                     contributing_factors=factors,
                     recommendation=_recommendation(prob, dep, factors),
                     timestamp=datetime.now(timezone.utc),
@@ -285,6 +290,7 @@ class FloodPredictor:
                             longitude=round(clon, 6),
                             rainfall_24h_mm=50 + np.random.exponential(10),
                             rainfall_1h_mm=5 + np.random.exponential(3),
+                            river_discharge_m3s=max(0, 10 + np.random.exponential(20)),
                             rainfall_3h_mm=12 + np.random.exponential(5),
                             elevation_m=max(0, elev),
                             slope_degrees=max(0.1, 2 - abs(i) * 0.3),
@@ -320,6 +326,7 @@ class FloodPredictor:
                 ward_id=ward_id,
                 rainfall_24h_mm=float(np.clip(60 + np.random.exponential(15), 0, 300)),
                 rainfall_1h_mm=float(np.clip(8 + np.random.exponential(5), 0, 100)),
+                river_discharge_m3s=float(max(0, 50 + np.random.exponential(50))),
                 rainfall_3h_mm=float(np.clip(18 + np.random.exponential(8), 0, 200)),
                 rainfall_48h_mm=float(np.clip(85 + np.random.exponential(20), 0, 500)),
                 elevation_m=float(max(1.0, 15 + np.random.randn() * 5)),
@@ -413,6 +420,7 @@ class FloodPredictor:
             rainfall_6h_mm=fc_rain * 1.5,
             rainfall_24h_mm=fc_rain * 3,
             rainfall_48h_mm=fc_rain * 4,
+            river_discharge_m3s=current.get("river_discharge_m3s", 0),
             temperature_c=current.get("temperature_c", 25),
             humidity_pct=current.get("humidity_pct", 70),
             wind_speed_ms=current.get("wind_speed_ms", 5),
@@ -441,3 +449,75 @@ class FloodPredictor:
             "confidence": pred.confidence,
             "timestamp": pred.timestamp,
         }
+
+    # ──────────────────────────────────────────────────────────────────────────
+    # Future Prediction
+
+    async def predict_future(
+        self, lat: float, lon: float, forecast_days: int = 7
+    ) -> List[Dict[str, Any]]:
+        """Predict flood probability for future days."""
+        data = await _collector.fetch_future_conditions(lat, lon, forecast_days)
+        weather = data.get("weather", {})
+        flood = data.get("flood", {})
+
+        daily_weather = weather.get("hourly", {})
+        daily_flood = flood.get("daily", {})
+
+        if not daily_weather or not daily_flood:
+            return []
+
+        # Convert hourly weather to daily aggregations roughly
+        # This is a simplification; in production, you'd use daily endpoints or precise aggregation.
+        times = daily_flood.get("time", [])
+        discharges = daily_flood.get("river_discharge", [])
+
+        # Rough mapping
+        weather_precip = daily_weather.get("precipitation", [])
+
+        predictions = []
+        for i, dt_str in enumerate(times):
+            if i >= forecast_days:
+                break
+
+            # 24h precipitation sum
+            start_idx = i * 24
+            end_idx = start_idx + 24
+            daily_precip = sum(weather_precip[start_idx:end_idx]) if len(weather_precip) >= end_idx else 0.0
+
+            discharge = discharges[i] if i < len(discharges) else 0.0
+
+            req = PredictionRequest(
+                latitude=lat,
+                longitude=lon,
+                rainfall_1h_mm=daily_precip / 24, # simplified
+                river_discharge_m3s=discharge,
+                rainfall_3h_mm=daily_precip / 8,
+                rainfall_6h_mm=daily_precip / 4,
+                rainfall_24h_mm=daily_precip,
+                rainfall_48h_mm=daily_precip * 1.5,
+                temperature_c=25,
+                humidity_pct=70,
+                wind_speed_ms=5,
+                wind_direction_deg=180,
+                pressure_hpa=1013,
+                soil_moisture_pct=40,
+                month=datetime.strptime(dt_str, "%Y-%m-%d").month,
+                hour_of_day=12,
+            )
+
+            pred = await self.predict(req)
+
+            predictions.append({
+                "date": dt_str,
+                "flood_probability": pred.flood_probability,
+                "flood_risk_level": pred.flood_risk_level,
+                "estimated_inundation_depth_m": pred.estimated_inundation_depth_m,
+                "recommendation": pred.recommendation,
+                "confidence": pred.confidence,
+                "overall_confidence": pred.overall_confidence,
+                "river_discharge_m3s": discharge,
+                "forecast_rainfall_24h_mm": daily_precip,
+            })
+
+        return predictions
