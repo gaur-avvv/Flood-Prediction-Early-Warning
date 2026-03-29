@@ -26,10 +26,22 @@ from models.schemas import (
     BulkPredictionRequest,
     BulkPredictionResponse,
     HealthResponse,
+    EmailAlertRequest,
+    EmailAlertResponse,
+    EmailConfigResponse,
 )
 from services.data_collector import DataCollector
 from services.trainer import ModelTrainer
 from services.predictor import FloodPredictor
+from services.email_service import (
+    send_ward_alert,
+    send_hotspot_alert,
+    send_nowcast_alert,
+    is_email_configured,
+    SMTP_HOST,
+    SMTP_FROM,
+    ALERT_RECIPIENTS,
+)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -291,3 +303,90 @@ async def nowcast(
     if not await model_trainer.is_trained():
         raise HTTPException(status_code=503, detail="Model not yet trained.")
     return await flood_predictor.nowcast(lat, lon, horizon_minutes)
+
+
+# ─── Email Alerts ────────────────────────────────────────────────────────────
+@app.get("/email/config", response_model=EmailConfigResponse, tags=["Email"])
+async def email_config():
+    """Check email notification configuration status."""
+    return EmailConfigResponse(
+        configured=is_email_configured(),
+        smtp_host=SMTP_HOST if is_email_configured() else None,
+        from_address=SMTP_FROM if is_email_configured() else None,
+        default_recipients=ALERT_RECIPIENTS,
+    )
+
+
+@app.post("/email/ward-alert", response_model=EmailAlertResponse, tags=["Email"])
+async def send_ward_email_alert(
+    request: EmailAlertRequest,
+    lat: float = Query(..., description="City centre latitude"),
+    lon: float = Query(..., description="City centre longitude"),
+    radius_km: float = Query(15.0, description="City radius km"),
+):
+    """
+    Compute ward readiness and email results to the specified recipients.
+    Sends alerts only if critical/high-risk wards are found (or recipients are explicitly provided).
+    """
+    if not await model_trainer.is_trained():
+        raise HTTPException(status_code=503, detail="Model not yet trained.")
+
+    wards = await flood_predictor.compute_ward_readiness(lat, lon, radius_km)
+    ward_dicts = [w.model_dump() for w in wards]
+    result = send_ward_alert(
+        wards=ward_dicts,
+        location=request.location,
+        recipients=request.recipients,
+    )
+    return EmailAlertResponse(**result)
+
+
+@app.post("/email/hotspot-alert", response_model=EmailAlertResponse, tags=["Email"])
+async def send_hotspot_email_alert(
+    request: EmailAlertRequest,
+    lat: float = Query(..., description="Centre latitude"),
+    lon: float = Query(..., description="Centre longitude"),
+    radius_km: float = Query(10.0, description="Search radius km"),
+    grid_size_km: float = Query(1.0, description="Grid cell size km"),
+    min_risk: float = Query(0.5, description="Minimum risk threshold"),
+):
+    """
+    Scan for micro-hotspots and email critical results to recipients.
+    """
+    if not await model_trainer.is_trained():
+        raise HTTPException(status_code=503, detail="Model not yet trained.")
+
+    hotspots = await flood_predictor.scan_hotspots(
+        lat=lat, lon=lon, radius_km=radius_km,
+        grid_size_km=grid_size_km, min_risk=min_risk,
+    )
+    hotspot_dicts = [h.model_dump() for h in hotspots["hotspots"]]
+    result = send_hotspot_alert(
+        hotspots=hotspot_dicts,
+        total_scanned=hotspots["total_cells"],
+        location=request.location,
+        recipients=request.recipients,
+    )
+    return EmailAlertResponse(**result)
+
+
+@app.post("/email/nowcast-alert", response_model=EmailAlertResponse, tags=["Email"])
+async def send_nowcast_email_alert(
+    request: EmailAlertRequest,
+    lat: float = Query(..., description="Latitude"),
+    lon: float = Query(..., description="Longitude"),
+    horizon_minutes: int = Query(45, description="Forecast horizon (30–120 min)"),
+):
+    """
+    Run nowcast and email the result if flood probability exceeds alert threshold.
+    """
+    if not await model_trainer.is_trained():
+        raise HTTPException(status_code=503, detail="Model not yet trained.")
+
+    nowcast_result = await flood_predictor.nowcast(lat, lon, horizon_minutes)
+    result = send_nowcast_alert(
+        nowcast=nowcast_result,
+        location=request.location,
+        recipients=request.recipients,
+    )
+    return EmailAlertResponse(**result)

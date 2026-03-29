@@ -225,3 +225,26 @@ class HealthResponse(BaseModel):
     last_trained: Optional[datetime]
     hotspots_mapped: int
     version: str
+
+
+# ─── Email Alert ─────────────────────────────────────────────────────────────
+
+class EmailAlertRequest(BaseModel):
+    recipients: List[str] = Field(
+        ..., min_length=1, description="List of email addresses to send alerts to",
+    )
+    location: str = Field("Unknown Location", description="Location name for the alert")
+
+
+class EmailAlertResponse(BaseModel):
+    status: str = Field(..., description="sent / skipped / error")
+    reason: Optional[str] = None
+    recipients: Optional[List[str]] = None
+    subject: Optional[str] = None
+
+
+class EmailConfigResponse(BaseModel):
+    configured: bool
+    smtp_host: Optional[str] = None
+    from_address: Optional[str] = None
+    default_recipients: List[str] = []
