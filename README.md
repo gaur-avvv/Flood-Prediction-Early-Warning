@@ -1,4 +1,5 @@
 # 🌊 Bio-SentinelX — Urban Flood Prediction & Early-Warning API
+[DeepWiki](https://deepwiki.com/gaur-avvv/Flood-Prediction-Early-Warning)
 
 **GIS-integrated machine-learning engine for hyper-local urban flood forecasting, micro-hotspot mapping, and ward-level readiness scoring — built for the Indian monsoon context.**
 
