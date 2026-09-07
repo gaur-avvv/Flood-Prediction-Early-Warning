@@ -17,6 +17,11 @@
 
 ## 📖 Overview
 
+https://flood-prediction-early-warning.onrender.com/docs
+
+<img width="1528" height="861" alt="image" src="https://github.com/user-attachments/assets/f6b6c614-009c-46ac-8d67-923864d1385f" />
+
+
 **Bio-SentinelX** is a FastAPI backend that predicts urban flooding at hyper-local grid resolution (down to **250m–1km cells**), identifies **2,500+ micro-hotspots** across a city, and produces **ward-level Pre-Monsoon Readiness Scores** (A–D) so disaster-response teams (e.g. NDRF/SDRF) can pre-position resources before the monsoon hits.
 
 It fuses **free, open geospatial and weather data** (no paid satellite/radar feeds) with a **stacked machine-learning ensemble** and classical hydrology formulas to deliver:
