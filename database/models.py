@@ -66,3 +66,13 @@ class FloodEvent(Base):
     __table_args__ = (
         Index("ix_flood_latlon", "lat", "lon"),
     )
+
+
+class SchedulerLockRecord(Base):
+    """Leader-election row for the background scheduler (Sprint 0 / T-31)."""
+
+    __tablename__ = "scheduler_lock"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    holder: Mapped[str] = mapped_column(String(200), nullable=False)
+    heartbeat: Mapped[datetime] = mapped_column(DateTime, nullable=False)

@@ -12,6 +12,7 @@ Training targets:
   - Regression: inundation depth (metres)
 """
 
+import hashlib
 import logging
 import os
 import pickle
@@ -26,6 +27,8 @@ from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, Stac
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
     accuracy_score,
+    average_precision_score,
+    brier_score_loss,
     f1_score,
     roc_auc_score,
     mean_absolute_error,
@@ -104,6 +107,53 @@ class ModelMetadata:
     feature_importances: dict = field(default_factory=dict)
     location_lat: Optional[float] = None
     location_lon: Optional[float] = None
+    # ── T-32 metric block + T-31 artefact verification ──
+    pr_auc: Optional[float] = None
+    brier_score: Optional[float] = None
+    expected_calibration_error: Optional[float] = None
+    calibration_curve: list = field(default_factory=list)
+    split_strategy: str = "in_sample_cv_calibrated"
+    eval_samples: int = 0
+    model_hash: Optional[str] = None
+    artefact_verified: bool = False
+
+
+def _calibration_table(y_true: np.ndarray, probs: np.ndarray, n_bins: int = 10):
+    """Reliability table + Expected Calibration Error (T-32)."""
+    table = []
+    ece = 0.0
+    n = len(y_true)
+    if n == 0:
+        return table, 0.0
+    edges = np.linspace(0.0, 1.0, n_bins + 1)
+    for i in range(n_bins):
+        lo, hi = edges[i], edges[i + 1]
+        mask = (probs >= lo) & (probs < hi) if i < n_bins - 1 else (probs >= lo) & (probs <= hi)
+        count = int(mask.sum())
+        if count == 0:
+            continue
+        mean_pred = float(probs[mask].mean())
+        frac_pos = float(y_true[mask].mean())
+        ece += (count / n) * abs(mean_pred - frac_pos)
+        table.append(
+            {
+                "bin_lower": round(float(lo), 2),
+                "bin_upper": round(float(hi), 2),
+                "count": count,
+                "mean_predicted": round(mean_pred, 4),
+                "fraction_positive": round(frac_pos, 4),
+            }
+        )
+    return table, ece
+
+
+def _sha256_of_files(paths) -> str:
+    h = hashlib.sha256()
+    for p in paths:
+        with open(p, "rb") as f:
+            for chunk in iter(lambda: f.read(1 << 20), b""):
+                h.update(chunk)
+    return h.hexdigest()
 
 
 class FloodMLModel:
@@ -222,8 +272,20 @@ class FloodMLModel:
     # resource-constrained cloud instances (≈3–5 min for the stacked ensemble).
     _MAX_TRAIN_ROWS = 50_000
 
-    def train(self, X: pd.DataFrame, y_flood: pd.Series, y_depth: pd.Series) -> ModelMetadata:
-        """Train both classifier and depth regressor, return metrics."""
+    def train(
+        self,
+        X: pd.DataFrame,
+        y_flood: pd.Series,
+        y_depth: pd.Series,
+        dates: Optional[pd.Series] = None,
+    ) -> ModelMetadata:
+        """Train both classifier and depth regressor, return metrics.
+
+        T-32: when ``dates`` are supplied and cover >60 distinct timestamps,
+        metrics are computed on a time-ordered 80/20 holdout (the production
+        artefact is then refit on 100% of the data); otherwise metrics are
+        in-sample and ``split_strategy`` reports that honestly.
+        """
         logger.info("Training flood classifier on %d samples…", len(X))
 
         # Sub-sample large datasets to keep training time bounded.
@@ -233,27 +295,66 @@ class FloodMLModel:
                 len(X), self._MAX_TRAIN_ROWS,
             )
             from sklearn.model_selection import train_test_split
-            X, _, y_flood, _, y_depth, _ = train_test_split(
-                X, y_flood, y_depth,
-                train_size=self._MAX_TRAIN_ROWS,
-                stratify=y_flood,
-                random_state=42,
-            )
+            if dates is not None:
+                X, _, y_flood, _, y_depth, _, dates, _ = train_test_split(
+                    X, y_flood, y_depth, pd.Series(dates).reset_index(drop=True),
+                    train_size=self._MAX_TRAIN_ROWS,
+                    stratify=y_flood,
+                    random_state=42,
+                )
+            else:
+                X, _, y_flood, _, y_depth, _ = train_test_split(
+                    X, y_flood, y_depth,
+                    train_size=self._MAX_TRAIN_ROWS,
+                    stratify=y_flood,
+                    random_state=42,
+                )
 
-        X_clean = X[FEATURE_COLUMNS].copy()
+        X_clean = X[FEATURE_COLUMNS].copy().reset_index(drop=True)
+        y_flood = y_flood.reset_index(drop=True)
+        y_depth = y_depth.reset_index(drop=True)
+
+        # ── Evaluation split (T-32) ──
+        split_strategy = "in_sample_cv_calibrated"
+        eval_idx = None
+        if dates is not None and len(dates) == len(X_clean):
+            d = pd.to_datetime(pd.Series(dates).reset_index(drop=True))
+            if d.nunique() > 60:
+                order = np.argsort(d.to_numpy())
+                cut = max(1, int(len(order) * 0.8))
+                tr, te = order[:cut], order[cut:]
+                if y_flood.iloc[tr].nunique() > 1 and y_flood.iloc[te].nunique() > 1:
+                    eval_idx = (tr, te)
+                    split_strategy = "time_ordered_holdout_80_20"
 
         # ── Classifier ──
         self.classifier = self._build_classifier()
-        self.classifier.fit(X_clean, y_flood.values)
+        if eval_idx is not None:
+            tr, te = eval_idx
+            self.classifier.fit(X_clean.iloc[tr], y_flood.iloc[tr].values)
+            probs = self.classifier.predict_proba(X_clean.iloc[te])[:, 1]
+            y_eval = y_flood.iloc[te].values
+            # Refit on the full dataset for the production artefact.
+            self.classifier.fit(X_clean, y_flood.values)
+        else:
+            self.classifier.fit(X_clean, y_flood.values)
+            probs = self.classifier.predict_proba(X_clean)[:, 1]
+            y_eval = y_flood.values
+        eval_samples = len(y_eval)
+        preds = (probs >= 0.5).astype(int)
 
-        preds = self.classifier.predict(X_clean)
-        probs = self.classifier.predict_proba(X_clean)[:, 1]
+        acc = accuracy_score(y_eval, preds)
+        f1 = f1_score(y_eval, preds, zero_division=0)
+        n_classes = len(np.unique(y_eval))
+        auc = roc_auc_score(y_eval, probs) if n_classes > 1 else 0.5
+        pr_auc = average_precision_score(y_eval, probs) if n_classes > 1 else 0.0
+        brier = brier_score_loss(y_eval, probs)
+        cal_table, ece = _calibration_table(np.asarray(y_eval), np.asarray(probs))
 
-        acc = accuracy_score(y_flood, preds)
-        f1 = f1_score(y_flood, preds, zero_division=0)
-        auc = roc_auc_score(y_flood, probs) if y_flood.nunique() > 1 else 0.5
-
-        logger.info("Classifier: acc=%.3f  f1=%.3f  auc=%.3f", acc, f1, auc)
+        logger.info(
+            "Classifier: acc=%.3f f1=%.3f auc=%.3f pr_auc=%.3f brier=%.3f ece=%.3f split=%s",
+            acc, f1, auc, pr_auc, brier, ece, split_strategy,
+        )
 
         # ── Depth Regressor ──
         self.depth_regressor = self._build_depth_regressor()
@@ -289,6 +390,12 @@ class FloodMLModel:
             f1=round(f1, 4),
             roc_auc=round(auc, 4),
             mae_depth=round(mae, 4),
+            pr_auc=round(pr_auc, 4),
+            brier_score=round(brier, 4),
+            expected_calibration_error=round(ece, 4),
+            calibration_curve=cal_table,
+            split_strategy=split_strategy,
+            eval_samples=eval_samples,
             last_trained=datetime.utcnow(),
             training_samples=len(X),
             feature_importances={
@@ -346,9 +453,31 @@ class FloodMLModel:
             pickle.dump(self.classifier, f)
         with open(REGRESSOR_PATH, "wb") as f:
             pickle.dump(self.depth_regressor, f)
+        # T-31: artefact integrity – hash of the binary model files, stored in
+        # metadata and re-verified on every load.
+        self.metadata.model_hash = _sha256_of_files([CLASSIFIER_PATH, REGRESSOR_PATH])
+        self.metadata.artefact_verified = True
         with open(METADATA_PATH, "wb") as f:
             pickle.dump(self.metadata, f)
-        logger.info("Model saved to %s", MODEL_DIR)
+        logger.info(
+            "Model saved to %s (sha256=%s…)", MODEL_DIR, self.metadata.model_hash[:12]
+        )
+
+    def verify_artefact(self) -> bool:
+        """T-31: re-hash the saved artefacts and compare with metadata."""
+        if not self.is_trained:
+            return False
+        expected = getattr(self.metadata, "model_hash", None)
+        if not expected:
+            self.metadata.artefact_verified = False
+            return False
+        try:
+            actual = _sha256_of_files([CLASSIFIER_PATH, REGRESSOR_PATH])
+        except OSError:
+            self.metadata.artefact_verified = False
+            return False
+        self.metadata.artefact_verified = actual == expected
+        return self.metadata.artefact_verified
 
     def _load_if_exists(self):
         if all(os.path.exists(p) for p in [CLASSIFIER_PATH, REGRESSOR_PATH, METADATA_PATH]):
@@ -359,10 +488,24 @@ class FloodMLModel:
                     self.depth_regressor = pickle.load(f)
                 with open(METADATA_PATH, "rb") as f:
                     self.metadata = pickle.load(f)
+                expected_hash = getattr(self.metadata, "model_hash", None)
+                if expected_hash:
+                    actual = _sha256_of_files([CLASSIFIER_PATH, REGRESSOR_PATH])
+                    self.metadata.artefact_verified = actual == expected_hash
+                    if not self.metadata.artefact_verified:
+                        logger.error(
+                            "Model artefact hash MISMATCH – saved files may be "
+                            "corrupted or tampered with (expected %s…, got %s…)",
+                            expected_hash[:12], actual[:12],
+                        )
+                else:
+                    self.metadata.artefact_verified = False
+                    logger.info("Legacy model artefact without hash – unverified")
                 logger.info(
-                    "Loaded existing model (acc=%.3f, trained=%s)",
+                    "Loaded existing model (acc=%.3f, trained=%s, verified=%s)",
                     self.metadata.accuracy,
                     self.metadata.last_trained,
+                    getattr(self.metadata, "artefact_verified", False),
                 )
             except Exception as e:
                 logger.warning("Failed to load saved model: %s", e)

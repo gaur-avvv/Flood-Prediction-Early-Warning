@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.venv/
+venv/
+
+# Local env / secrets
+.env
+
+# Runtime artefacts
+*.log
+flood_data.db
+saved_models/*.pkl
+data/training_data*.csv
+
+# Tooling / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
