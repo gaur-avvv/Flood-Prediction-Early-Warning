@@ -26,6 +26,8 @@ from models.schemas import (
 )
 from services.feature_engineering import build_feature_vector, build_feature_dataframe
 from services.data_collector import DataCollector
+from services.enrichment import get_enrichment_service
+from utils.errors import APIError
 
 logger = logging.getLogger(__name__)
 _collector = DataCollector()
@@ -228,7 +230,7 @@ class FloodPredictor:
         Scan the area with a grid of predictions.
         Returns all cells above the risk threshold.
         """
-        grid_reqs = self._build_grid_requests(lat, lon, radius_km, grid_size_km)
+        grid_reqs = await self._build_grid_requests(lat, lon, radius_km, grid_size_km)
         logger.info("Scanning %d grid cells for hotspots…", len(grid_reqs))
 
         # Predict in sub-batches of 100
@@ -264,49 +266,51 @@ class FloodPredictor:
             "hotspots": hotspots,
         }
 
-    def _build_grid_requests(
+    MAX_SCAN_CELLS = 6000  # contract docs/06 §3.2 cell budget
+
+    async def _build_grid_requests(
         self, lat: float, lon: float, radius_km: float, grid_size_km: float
     ) -> List[PredictionRequest]:
-        """Generate grid cell centres covering the radius."""
+        """Generate grid cell centres and enrich each with REAL covariates.
+
+        T-02 (audit B-1): replaces the synthetic sin/cos feature patterns.
+        Weather and river discharge are sampled at the scan centroid (marked
+        spatially uniform in provenance); per-cell elevation comes from SRTM
+        in bounded batches of 50.
+        """
         delta_lat = grid_size_km / 111.32
         delta_lon = grid_size_km / (111.32 * math.cos(math.radians(lat)))
         max_steps = int(radius_km / grid_size_km) + 1
-        model = get_model()
-        m = model.metadata
 
-        requests = []
+        coords = []
         for i in range(-max_steps, max_steps + 1):
             for j in range(-max_steps, max_steps + 1):
-                clat = lat + i * delta_lat
-                clon = lon + j * delta_lon
                 dist = math.sqrt((i * grid_size_km) ** 2 + (j * grid_size_km) ** 2)
                 if dist <= radius_km:
-                    # Spatially correlated base features (simulating elevation traps & rain bands)
-                    # Use sin/cos of coordinates to create macro patterns
-                    spatial_pattern = math.sin(clat * 100) * math.cos(clon * 100)
-                    micro_pattern = math.sin(clat * 500) * math.cos(clon * 500)
-                    
-                    elev = max(0.0, 15.0 + spatial_pattern * 10.0 + micro_pattern * 3.0 - dist * 0.5)
-                    rain_mult = 1.0 + spatial_pattern * 0.3
-                    
-                    requests.append(
-                        PredictionRequest(
-                            latitude=round(clat, 6),
-                            longitude=round(clon, 6),
-                            rainfall_24h_mm=float(120.0 * rain_mult + max(0.0, micro_pattern)*20.0),
-                            rainfall_1h_mm=float(15.0 * rain_mult),
-                            rainfall_3h_mm=float(35.0 * rain_mult),
-                            elevation_m=max(0.0, elev),
-                            slope_degrees=max(0.1, 2.0 + micro_pattern * 2.0),
-                            flow_accumulation=max(0.0, 1500.0 - elev * 50.0),
-                            impervious_surface_pct=min(95.0, max(10.0, 60.0 - dist * 3.0 + micro_pattern * 10.0)),
-                            drainage_capacity_pct=max(10.0, min(90.0, 60.0 + spatial_pattern * 20.0)),
-                            soil_moisture_pct=min(95.0, max(30.0, 70.0 + spatial_pattern * 15.0)),
-                            previous_flood_events_5y=int(max(0.0, 3.0 - dist + micro_pattern)),
-                            month=6,
-                        )
+                    coords.append(
+                        (round(lat + i * delta_lat, 6), round(lon + j * delta_lon, 6))
                     )
-        return requests
+
+        if len(coords) > self.MAX_SCAN_CELLS:
+            raise APIError(
+                400,
+                "budget_exceeded",
+                f"Scan requires {len(coords)} grid cells; budget is "
+                f"{self.MAX_SCAN_CELLS}. Increase grid_size_km or reduce radius_km.",
+                {"cells_required": len(coords), "cell_budget": self.MAX_SCAN_CELLS},
+            )
+
+        enricher = get_enrichment_service()
+        cell_values, _prov = await enricher.enrich_grid(coords)
+        allowed = set(PredictionRequest.model_fields)
+        return [
+            PredictionRequest(
+                latitude=clat,
+                longitude=clon,
+                **{k: v for k, v in vals.items() if k in allowed},
+            )
+            for (clat, clon), vals in zip(coords, cell_values)
+        ]
 
     # ──────────────────────────────────────────────────────────────────────────
     # Ward readiness scoring
@@ -319,35 +323,22 @@ class FloodPredictor:
         In production: query ward polygon geometries from PostGIS.
         """
         wards = await self._generate_ward_grid(lat, lon, radius_km)
+
+        # T-02: enrich ward centroids with real covariates (bounded calls:
+        # weather/discharge at centroid, elevation batched per H3 cell).
+        enricher = get_enrichment_service()
+        cell_values, _prov = await enricher.enrich_grid([(w[0], w[1]) for w in wards])
+        allowed = set(PredictionRequest.model_fields)
+
         results = []
-
-        for ward in wards:
+        for ward, vals in zip(wards, cell_values):
             wlat, wlon, ward_id, ward_name = ward
-
-            # Spatially correlated weather & terrain for wards
-            spatial_pattern = math.sin(wlat * 50) * math.cos(wlon * 50)
-            dist_from_center = math.sqrt((wlat - lat)**2 + (wlon - lon)**2) * 111.32
-            
-            rain_base = 100 + spatial_pattern * 40
-            elev = max(1.0, 12 + spatial_pattern * 8 + dist_from_center * 0.5)
 
             req = PredictionRequest(
                 latitude=wlat,
                 longitude=wlon,
                 ward_id=ward_id,
-                rainfall_24h_mm=float(np.clip(rain_base, 0, 300)),
-                rainfall_1h_mm=float(np.clip(rain_base * 0.15, 0, 100)),
-                rainfall_3h_mm=float(np.clip(rain_base * 0.35, 0, 200)),
-                rainfall_48h_mm=float(np.clip(rain_base * 1.5, 0, 500)),
-                elevation_m=float(elev),
-                slope_degrees=float(np.clip(1.5 + spatial_pattern * 1.0, 0.1, 89)),
-                impervious_surface_pct=float(np.clip(65 - dist_from_center * 2 + spatial_pattern * 10, 0, 100)),
-                drainage_capacity_pct=float(np.clip(55 + spatial_pattern * 20, 0, 100)),
-                drain_condition_score=float(np.clip(0.65 + spatial_pattern * 0.2, 0.0, 1.0)),
-                soil_moisture_pct=float(np.clip(60 + spatial_pattern * 20, 0, 100)),
-                previous_flood_events_5y=int(max(0.0, 3.0 + spatial_pattern * 2.0 - dist_from_center * 0.2)),
-                population_density=float(max(0.0, 12000.0 - dist_from_center * 500.0)),
-                month=6,
+                **{k: v for k, v in vals.items() if k in allowed},
             )
             pred = await self.predict(req)
 
@@ -409,7 +400,7 @@ class FloodPredictor:
             logger.warning("Reverse geocoding failed: %s", e)
         
         # 2. Try matching the town in india_wards.csv
-        csv_path = os.path.join(os.path.dirname(__file__), "..", "..", "..", "india_wards.csv")
+        csv_path = os.path.join(os.path.dirname(__file__), "..", "data", "india_wards.csv")
         csv_path = os.path.abspath(csv_path)
         real_wards = []
         if town_name and os.path.exists(csv_path):
@@ -456,22 +447,15 @@ class FloodPredictor:
         n_hours = math.ceil(horizon_h)
         fc_rain = sum(hourly_fc[:n_hours]) if hourly_fc else current.get("rainfall_1h_mm", 0) * n_hours
 
-        req = PredictionRequest(
-            latitude=lat,
-            longitude=lon,
-            rainfall_1h_mm=current.get("rainfall_1h_mm", 0),
+        # T-02: real enriched terrain/soil/drainage/discharge covariates,
+        # overridden with the live nowcast rainfall projections.
+        enriched = await get_enrichment_service().enrich_point(lat, lon)
+        req = enriched.to_prediction_request(
+            rainfall_1h_mm=current.get("rainfall_1h_mm", enriched.values.get("rainfall_1h_mm", 0)),
             rainfall_3h_mm=fc_rain,
             rainfall_6h_mm=fc_rain * 1.5,
             rainfall_24h_mm=fc_rain * 3,
             rainfall_48h_mm=fc_rain * 4,
-            temperature_c=current.get("temperature_c", 25),
-            humidity_pct=current.get("humidity_pct", 70),
-            wind_speed_ms=current.get("wind_speed_ms", 5),
-            wind_direction_deg=current.get("wind_direction_deg", 180),
-            pressure_hpa=current.get("pressure_hpa", 1013),
-            soil_moisture_pct=current.get("soil_moisture_pct", 40),
-            month=datetime.utcnow().month,
-            hour_of_day=datetime.utcnow().hour,
         )
 
         pred = await self.predict(req)

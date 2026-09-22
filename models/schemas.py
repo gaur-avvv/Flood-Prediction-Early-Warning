@@ -3,7 +3,7 @@ Pydantic schemas for request/response models.
 """
 
 from datetime import datetime
-from typing import Optional, List
+from typing import Any, Dict, Optional, List
 from pydantic import BaseModel, Field, field_validator
 
 
@@ -205,6 +205,26 @@ class WardReadinessResponse(BaseModel):
     hotspot_count_in_ward: int
 
 
+class CalibrationBin(BaseModel):
+    bin_lower: float
+    bin_upper: float
+    count: int
+    mean_predicted: float
+    fraction_positive: float
+
+
+class TrainingMetrics(BaseModel):
+    """T-32 metric block: discrimination + calibration + artefact provenance."""
+    pr_auc: Optional[float] = None
+    brier_score: Optional[float] = None
+    expected_calibration_error: Optional[float] = None
+    calibration_curve: List[CalibrationBin] = []
+    split_strategy: str = "in_sample_cv_calibrated"
+    eval_samples: int = 0
+    model_hash: Optional[str] = None
+    mae_depth: Optional[float] = None
+
+
 class TrainingStatusResponse(BaseModel):
     status: str
     message: Optional[str] = None
@@ -216,6 +236,7 @@ class TrainingStatusResponse(BaseModel):
     training_samples: Optional[int] = None
     hotspots_mapped: Optional[int] = None
     feature_importances: Optional[dict] = None
+    metrics: Optional[TrainingMetrics] = None
 
 
 class HealthResponse(BaseModel):
@@ -248,3 +269,58 @@ class EmailConfigResponse(BaseModel):
     smtp_host: Optional[str] = None
     from_address: Optional[str] = None
     default_recipients: List[str] = []
+
+
+# ─── Sprint 0: errors / readiness / enriched prediction (T-01, T-31, T-02) ───
+
+class ErrorBody(BaseModel):
+    code: str
+    message: str
+    details: Optional[Any] = None
+
+
+class ErrorResponse(BaseModel):
+    error: ErrorBody
+    request_id: str
+
+
+class ReadyResponse(BaseModel):
+    status: str = Field(..., description="ready / not_ready")
+    version: str
+    checks: Dict[str, str]
+
+
+class FieldProvenanceModel(BaseModel):
+    source: str
+    fetched_at: Optional[datetime] = None
+    cached: bool = False
+    fallback: bool = False
+    spatial_uniform: bool = False
+
+
+class DriverContribution(BaseModel):
+    factor: str
+    contribution: float
+
+
+class EnrichedPredictionResponse(BaseModel):
+    """GET /v1/predict response (contract docs/06 §3.9)."""
+
+    h3_index: str
+    h3_resolution: int
+    latitude: float
+    longitude: float
+    flood_probability: float
+    flood_risk_level: str
+    severity_band: str = Field(
+        ..., description="S0_LOW / S1_MEDIUM / S2_HIGH / S3_CRITICAL"
+    )
+    estimated_inundation_depth_m: float
+    confidence: float
+    drivers: List[DriverContribution]
+    recommendation: str
+    instruction: str
+    enriched_fields: List[str]
+    missing_covariates: List[str]
+    provenance: Dict[str, FieldProvenanceModel]
+    timestamp: datetime

@@ -19,6 +19,21 @@ from services.feature_engineering import engineer_training_features
 
 logger = logging.getLogger(__name__)
 _training_lock = asyncio.Lock()
+
+
+def _metrics_block(m) -> Dict[str, Any]:
+    """T-32: metrics sub-document for training status (getattr-guarded so old
+    metadata pickles without the new fields still serialise)."""
+    return {
+        "pr_auc": getattr(m, "pr_auc", None),
+        "brier_score": getattr(m, "brier_score", None),
+        "expected_calibration_error": getattr(m, "expected_calibration_error", None),
+        "calibration_curve": getattr(m, "calibration_curve", []),
+        "split_strategy": getattr(m, "split_strategy", "in_sample_cv_calibrated"),
+        "eval_samples": getattr(m, "eval_samples", 0),
+        "model_hash": getattr(m, "model_hash", None),
+        "mae_depth": getattr(m, "mae_depth", None),
+    }
 # One dedicated thread for blocking sklearn/xgboost training so it never
 # steals threads from FastAPI's default executor or other background tasks.
 _train_executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="flood_train")
@@ -95,8 +110,14 @@ class ModelTrainer:
                 # 3. Train
                 logger.info("Step 3/3: Training ML model")
                 model: FloodMLModel = get_model()
+                dates = (
+                    pd.to_datetime(raw_df["date_time"])[valid_mask].reset_index(drop=True)
+                    if "date_time" in raw_df.columns
+                    else None
+                )
                 meta = await asyncio.get_event_loop().run_in_executor(
-                    _train_executor, model.train, feature_df, y_flood, y_depth
+                    _train_executor,
+                    lambda: model.train(feature_df, y_flood, y_depth, dates=dates),
                 )
                 meta.location_lat = lat
                 meta.location_lon = lon
@@ -115,6 +136,7 @@ class ModelTrainer:
                     "training_samples": meta.training_samples,
                     "hotspots_mapped": meta.hotspots_mapped,
                     "feature_importances": meta.feature_importances,
+                    "metrics": _metrics_block(meta),
                 }
                 logger.info(
                     "✅ Training done: acc=%.3f  f1=%.3f  auc=%.3f",
@@ -168,6 +190,7 @@ class ModelTrainer:
                 "training_samples": m.training_samples,
                 "hotspots_mapped": m.hotspots_mapped,
                 "feature_importances": m.feature_importances,
+                "metrics": _metrics_block(m),
             }
         return self._status
 

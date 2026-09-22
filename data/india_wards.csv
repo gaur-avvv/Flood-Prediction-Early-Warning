@@ -1,0 +1,1329 @@
+town,name,code
+Delhi,DELHI CANTT CHARGE 1,CANT_1
+Delhi,DELHI CANTT CHARGE 2,CANT_2
+Delhi,DELHI CANTT CHARGE 4,CANT_4
+Delhi,DELHI CANTT CHARGE 5,CANT_5
+Delhi,DELHI CANTT CHARGE 6,CANT_6
+Delhi,DELHI CANTT CHARGE 7,CANT_7
+Delhi,DELHI CANTT CHARGE 8,CANT_8
+Delhi,DELHI CANTT CHARGE 3,CANT_3
+Delhi,NDMC CHARGE 1,NDMC_1
+Delhi,NDMC CHARGE 2,NDMC_2
+Delhi,NDMC CHARGE 3,NDMC_3
+Delhi,NDMC CHARGE 4,NDMC_4
+Delhi,NDMC CHARGE 5,NDMC_5
+Delhi,NDMC CHARGE 7,NDMC_7
+Delhi,NDMC CHARGE 8,NDMC_8
+Delhi,NDMC CHARGE 9,NDMC_9
+Delhi,NDMC CHARGE 6,NDMC_6
+Delhi,CHANDNI CHOWK,80
+Delhi,MINTO ROAD,81
+Delhi,KUCHA PANDIT,82
+Delhi,BAZAR SITARAM,83
+Delhi,IDGAH ROAD,85
+Delhi,KHYALA,108
+Delhi,JANAK PURI NORTH,109
+Delhi,MUKHERJEE NAGAR,11
+Delhi,JANAK PURI WEST,117
+Delhi,JANAK PURI SOUTH,118
+Delhi,MILAP NAGAR,119
+Delhi,SITA PURI,120
+Delhi,CHHAWLA,133
+Delhi,NANGLI SAKRAVATI,134
+Delhi,KAKRAULA,135
+Delhi,KHERA,140
+Delhi,DILSHAD GARDEN,241
+Delhi,NEW SEEMA PURI,242
+Delhi,NAND NAGRI,243
+Delhi,SUNDER NAGARI,244
+Delhi,DURGA PURI,245
+Delhi,ASHOK NAGAR,246
+Delhi,RAM NAGAR,247
+Delhi,WELCOME COLONY,248
+Delhi,CHAUHAN BANGER,249
+Delhi,ZAFFRABAD,250
+Delhi,MAUJPUR,252
+Delhi,GHONDA,255
+Delhi,YAMUNA VIHAR,256
+Delhi,SUBHASH MOHALLA,257
+Delhi,KARDAM PURI,258
+Delhi,JANTA COLONY,259
+Delhi,BABAR PUR,260
+Delhi,JIWANPUR,261
+Delhi,GOKALPUR,262
+Delhi,SABOLI,263
+Delhi,HARSH VIHAR,264
+Delhi,SHIV VIHAR,265
+Delhi,KARAWAL NAGAR EAST,266
+Delhi,MUSTAFABAD,268
+Delhi,KHAJOORI KHAS,269
+Delhi,KARAWAL NAGAR WEST,271
+Delhi,SONIA VIHAR,272
+Delhi,NIZAMUDDIN,154
+Delhi,BHOGAL,156
+Delhi,KASTURBA NAGAR,157
+Delhi,AMAR COLONY,160
+Delhi,MALVIYA NAGAR,161
+Delhi,HAUZ RANI,162
+Delhi,ANDREWSGANJ,159
+Delhi,VASANT VIHAR,165
+Delhi,MUNIRKA,166
+Delhi,NANAK PURA,168
+Delhi,VASANTKUNJ,171
+Delhi,DAKSHINPURI EXT.,180
+Delhi,KHANPUR,181
+Delhi,AMBEDKAR NAGAR,182
+Delhi,MADANGIR,183
+Delhi,PUSHP VIHAR,184
+Delhi,TUGHLAKABAD EXTN,185
+Delhi,SANGAM VIHAR CENTRAL,187
+Delhi,SANGAM VIHAR EAST,188
+Delhi,CHIRAG DELHI,189
+Delhi,CHITRANJAN PARK,190
+Delhi,SHAPUR JAT,191
+Delhi,GREATER KAILASH-I,192
+Delhi,SRI NIWASPURI,193
+Delhi,EAST OF KAILASH,194
+Delhi,GOVIND PURI,195
+Delhi,KALKAJI,196
+Delhi,TUGHLAKABAD,197
+Delhi,PUL PEHLAD,198
+Delhi,TEKHAND,199
+Delhi,HARKESH NAGAR,200
+Delhi,JAITPUR,201
+Delhi,MEETHEYPUR,202
+Delhi,BADAR PUR,203
+Delhi,MOLARBAND,204
+Delhi,OKHLA,206
+Delhi,TURKMAN GATE,84
+Delhi,BALLIMARAN,86
+Delhi,RAM NAGAR,87
+Delhi,QASABPURA,88
+Delhi,PAHAR GANJ,89
+Delhi,SADH NAGAR,146
+Delhi,PUSA,150
+Delhi,INDER PURI,151
+Delhi,NARAINA,152
+Delhi,DEOLI,173
+Delhi,CHHATARPUR,174
+Delhi,AYA NAGAR,175
+Delhi,BHATI,176
+Delhi,MADANPUR KHADAR,207
+Delhi,SARITA VIHAR,208
+Delhi,GHONDLI,231
+Delhi,ANARKALI,232
+Delhi,GANDHI NAGAR,234
+Delhi,AZAD NAGAR,235
+Delhi,RAGHUBAR PURA,236
+Delhi,SHAHDARA,237
+Delhi,JHILMIL,238
+Delhi,VIVEK VIHAR,239
+Delhi,DILSHAD COLONY,240
+Delhi,PUNJABI BAGH,103
+Delhi,NEW RANJIT NAGAR,96
+Delhi,KIRTI NAGAR,97
+Delhi,MANSAROWER GARDEN,98
+Delhi,HASTSAL,122
+Delhi,SANGAM PARK,71
+Delhi,MODEL TOWN,72
+Delhi,KAMLA NAGAR,69
+Delhi,INDER LOK COLONY,74
+Delhi,KISHAN GANJ,75
+Delhi,DEPUTY GANJ,76
+Delhi,KASHMERE GATE,77
+Delhi,MAJNU KA TILA,78
+Delhi,JAMA MASJID,79
+Delhi,TILAK NAGAR,114
+Delhi,MAJOR BHUPINDAR SINGH NAGAR,115
+Delhi,VIKASPURI EAST,116
+Delhi,MOHAN GARDEN,125
+Delhi,NAWADA,126
+Delhi,UTTAM NAGAR,127
+Delhi,BINDAPUR,128
+Delhi,DABRI,129
+Delhi,MATIALA,136
+Delhi,ROSHANPURA,137
+Delhi,MAYUR VIHAR PHASE-I,209
+Delhi,ROHINI,21
+Delhi,DALLOPURA,210
+Delhi,TRILOK PURI,211
+Delhi,NEW ASHOK NAGAR,212
+Delhi,KALYAN PURI,213
+Delhi,KHICHRIPUR,214
+Delhi,KONDLI,215
+Delhi,GHAROLI,216
+Delhi,VINOD NAGAR,217
+Delhi,ASHOK VIHAR,68
+Delhi,WAJIRPUR,67
+Delhi,SAWAN PARK,66
+Delhi,NIMRI COLONY,65
+Delhi,SHAKUR PUR,64
+Delhi,KOHAT ENCLAVE,63
+Delhi,RAMPURA,62
+Delhi,TRI NAGAR,61
+Delhi,SARASWATI VIHAR,60
+Delhi,RANI BAGH,59
+Delhi,PASCHIM VIHAR NORTH,58
+Delhi,PASCHIM VIHAR SOUTH,57
+Delhi,SHALIMAR BAGH SOUTH,56
+Delhi,SHALIMAR BAGH NORTH,55
+Delhi,PITAMPUR NORTH,54
+Delhi,PITAMPURA SOUTH,53
+Delhi,NAHARPUR,52
+Delhi,ROHINI EAST,51
+Delhi,ROHINI CENTRAL,50
+Delhi,MANGOLPURI  WEST,48
+Delhi,MANGOLPURI  EAST,46
+Delhi,ROHINI SOUTH,45
+Delhi,QUAMMRUDDIN NAGAR,44
+Delhi,NANGLOI EAST,43
+Delhi,PERAGHARHI,42
+Delhi,GURU HARKISHAN NAGAR,41
+Delhi,SULTANPURI  SOUTH,40
+Delhi,SULTANPURI  EAST,37
+Delhi,KIRARI SULEMAN NAGAR,35
+Delhi,KARALA,29
+Delhi,BEGUMPUR,27
+Delhi,POOTH KALAN,25
+Delhi,VIJAY VIHAR,24
+Delhi,GEETA COLONY,230
+Delhi,KRISHNA  NAGAR,229
+Delhi,PREET VIHAR,228
+Delhi,I.P EXTENTION,227
+Delhi,ANAND VIHAR,225
+Delhi,SHAKARPUR,223
+Delhi,LAXMI NAGAR,222
+Delhi,RITHALA,22
+Delhi,MAYUR VIHAR PHASE II,219
+Delhi,MANDAWALI,218
+Delhi,KARAM PURA,100
+Delhi,MAHAVIR ENCLAVE,147
+Delhi,SAGARPUR,131
+Delhi,SAGARPUR WEST,132
+Delhi,MUNDAKA,30
+Delhi,EAST PATEL NAGAR,95
+Delhi,WEST PATEL NAGAR,94
+Delhi,DEV NAGAR,92
+Delhi,KAROL BAGH,91
+Delhi,MODEL BASTI,90
+Delhi,RANA PRATAP BAGH,70
+Delhi,BAKHTAWAR PUR,4
+Delhi,ALIPUR,3
+Delhi,SAHIBABAD DAULAT PUR,26
+Delhi,BANKNER,2
+Delhi,MALKAGANJ,9
+Delhi,JHARODA,8
+Delhi,MUKUND PUR,6
+Delhi,BAWANA,28
+Delhi,BHALSWA,19
+Delhi,SAMAYPUR BADLI,17
+Delhi,JAHANGIRPURI-I,16
+Delhi,SARAI PIPAL THALA,15
+Delhi,MAHIPALPUR,144
+Delhi,KAPASHERA,143
+Delhi,BIJWASAN,141
+Delhi,ADARASH  NAGAR,14
+Delhi,DHIR PUR,13
+Delhi,G.T.B. NAGAR,12
+Delhi,TIMAR PUR,10
+Delhi,RAJA GARDEN,101
+Delhi,RAGHUBIR NAGAR,102
+Delhi,RAJOURI GARDEN,105
+Delhi,NANGAL RAYA,110
+Delhi,HARI NAGAR,111
+Delhi,SUBHASH NAGAR,112
+Delhi,MADHU VIHAR,148
+Delhi,BUDH VIHAR,23
+Delhi,NANGLOI JAT WEST,31
+Delhi,NITHARI,34
+Delhi,SULTANPUR MAJRA,39
+Delhi,ROHINI NORTH,49
+Delhi,LIBAS PUR,18
+Delhi,BRAHAM PURI,254
+Delhi,DICHAON KALAN,139
+Delhi,MOTI NAGAR,99
+Delhi,MANGOLPURI,47
+Delhi,LAJPAT NAGAR,155
+Delhi,PALAM,145
+Delhi,KISHANGARH,172
+Delhi,VISHWASH NAGAR,226
+Delhi,MADIPUR,104
+Delhi,RAJENDER NAGAR,149
+Delhi,R. K. PURAM,167
+Delhi,SAFDARJANG ENCLAVE,163
+Delhi,HAUZ KHAS,164
+Delhi,KOTLA MUBARAKPUR,158
+Delhi,MANGLAPURI,130
+Delhi,MANGOL PURI  NORTH,38
+Delhi,TAGORE GARDEN,106
+Delhi,LADOSARAI,169
+Delhi,NARELA,1
+Delhi,BHALASWA JAHAGIR PUR,5
+Delhi,BURARI,7
+Delhi,PATPARGANJ,220
+Delhi,PANDAV NAGAR,224
+Delhi,KISHAN KUNJ,221
+Delhi,DHARAMPURA,233
+Delhi,NEW USMANPUR,251
+Delhi,BHAJANPURA,253
+Delhi,NEHRU VIHAR,267
+Delhi,SAID UL AJAIB,177
+Delhi,SANGAM VIHAR,178
+Delhi,MEHRAULI,170
+Delhi,SANGAM VIHAR WEST,186
+Delhi,TIGRI,179
+Delhi,ZAKIR NAGAR,205
+Delhi,NAJAFGARH,138
+Delhi,JAHANGIR PURI -II,20
+Delhi,KUNWAR SINGH NAGAR,121
+Delhi,VIKAS NAGAR,124
+Delhi,VIKAS PURI,123
+Delhi,MAHAVIR NAGAR,113
+Delhi,DARYAGANJ,153
+Delhi,BALJIT NAGAR,93
+Delhi,NILOTHI,32
+Delhi,PRATAP VIHAR,36
+Delhi,PREM NAGAR,33
+Delhi,SHASTRI NAGAR,73
+Delhi,VISHNU GARDEN,107
+Delhi,TUKHMIR PUR,270
+Delhi,RAJ NAGAR,142
+New Delhi,DELHI CANTT CHARGE 1,CANT_1
+New Delhi,DELHI CANTT CHARGE 2,CANT_2
+New Delhi,DELHI CANTT CHARGE 4,CANT_4
+New Delhi,DELHI CANTT CHARGE 5,CANT_5
+New Delhi,DELHI CANTT CHARGE 6,CANT_6
+New Delhi,DELHI CANTT CHARGE 7,CANT_7
+New Delhi,DELHI CANTT CHARGE 8,CANT_8
+New Delhi,DELHI CANTT CHARGE 3,CANT_3
+New Delhi,NDMC CHARGE 1,NDMC_1
+New Delhi,NDMC CHARGE 2,NDMC_2
+New Delhi,NDMC CHARGE 3,NDMC_3
+New Delhi,NDMC CHARGE 4,NDMC_4
+New Delhi,NDMC CHARGE 5,NDMC_5
+New Delhi,NDMC CHARGE 7,NDMC_7
+New Delhi,NDMC CHARGE 8,NDMC_8
+New Delhi,NDMC CHARGE 9,NDMC_9
+New Delhi,NDMC CHARGE 6,NDMC_6
+New Delhi,CHANDNI CHOWK,80
+New Delhi,MINTO ROAD,81
+New Delhi,KUCHA PANDIT,82
+New Delhi,BAZAR SITARAM,83
+New Delhi,IDGAH ROAD,85
+New Delhi,KHYALA,108
+New Delhi,JANAK PURI NORTH,109
+New Delhi,MUKHERJEE NAGAR,11
+New Delhi,JANAK PURI WEST,117
+New Delhi,JANAK PURI SOUTH,118
+New Delhi,MILAP NAGAR,119
+New Delhi,SITA PURI,120
+New Delhi,CHHAWLA,133
+New Delhi,NANGLI SAKRAVATI,134
+New Delhi,KAKRAULA,135
+New Delhi,KHERA,140
+New Delhi,DILSHAD GARDEN,241
+New Delhi,NEW SEEMA PURI,242
+New Delhi,NAND NAGRI,243
+New Delhi,SUNDER NAGARI,244
+New Delhi,DURGA PURI,245
+New Delhi,ASHOK NAGAR,246
+New Delhi,RAM NAGAR,247
+New Delhi,WELCOME COLONY,248
+New Delhi,CHAUHAN BANGER,249
+New Delhi,ZAFFRABAD,250
+New Delhi,MAUJPUR,252
+New Delhi,GHONDA,255
+New Delhi,YAMUNA VIHAR,256
+New Delhi,SUBHASH MOHALLA,257
+New Delhi,KARDAM PURI,258
+New Delhi,JANTA COLONY,259
+New Delhi,BABAR PUR,260
+New Delhi,JIWANPUR,261
+New Delhi,GOKALPUR,262
+New Delhi,SABOLI,263
+New Delhi,HARSH VIHAR,264
+New Delhi,SHIV VIHAR,265
+New Delhi,KARAWAL NAGAR EAST,266
+New Delhi,MUSTAFABAD,268
+New Delhi,KHAJOORI KHAS,269
+New Delhi,KARAWAL NAGAR WEST,271
+New Delhi,SONIA VIHAR,272
+New Delhi,NIZAMUDDIN,154
+New Delhi,BHOGAL,156
+New Delhi,KASTURBA NAGAR,157
+New Delhi,AMAR COLONY,160
+New Delhi,MALVIYA NAGAR,161
+New Delhi,HAUZ RANI,162
+New Delhi,ANDREWSGANJ,159
+New Delhi,VASANT VIHAR,165
+New Delhi,MUNIRKA,166
+New Delhi,NANAK PURA,168
+New Delhi,VASANTKUNJ,171
+New Delhi,DAKSHINPURI EXT.,180
+New Delhi,KHANPUR,181
+New Delhi,AMBEDKAR NAGAR,182
+New Delhi,MADANGIR,183
+New Delhi,PUSHP VIHAR,184
+New Delhi,TUGHLAKABAD EXTN,185
+New Delhi,SANGAM VIHAR CENTRAL,187
+New Delhi,SANGAM VIHAR EAST,188
+New Delhi,CHIRAG DELHI,189
+New Delhi,CHITRANJAN PARK,190
+New Delhi,SHAPUR JAT,191
+New Delhi,GREATER KAILASH-I,192
+New Delhi,SRI NIWASPURI,193
+New Delhi,EAST OF KAILASH,194
+New Delhi,GOVIND PURI,195
+New Delhi,KALKAJI,196
+New Delhi,TUGHLAKABAD,197
+New Delhi,PUL PEHLAD,198
+New Delhi,TEKHAND,199
+New Delhi,HARKESH NAGAR,200
+New Delhi,JAITPUR,201
+New Delhi,MEETHEYPUR,202
+New Delhi,BADAR PUR,203
+New Delhi,MOLARBAND,204
+New Delhi,OKHLA,206
+New Delhi,TURKMAN GATE,84
+New Delhi,BALLIMARAN,86
+New Delhi,RAM NAGAR,87
+New Delhi,QASABPURA,88
+New Delhi,PAHAR GANJ,89
+New Delhi,SADH NAGAR,146
+New Delhi,PUSA,150
+New Delhi,INDER PURI,151
+New Delhi,NARAINA,152
+New Delhi,DEOLI,173
+New Delhi,CHHATARPUR,174
+New Delhi,AYA NAGAR,175
+New Delhi,BHATI,176
+New Delhi,MADANPUR KHADAR,207
+New Delhi,SARITA VIHAR,208
+New Delhi,GHONDLI,231
+New Delhi,ANARKALI,232
+New Delhi,GANDHI NAGAR,234
+New Delhi,AZAD NAGAR,235
+New Delhi,RAGHUBAR PURA,236
+New Delhi,SHAHDARA,237
+New Delhi,JHILMIL,238
+New Delhi,VIVEK VIHAR,239
+New Delhi,DILSHAD COLONY,240
+New Delhi,PUNJABI BAGH,103
+New Delhi,NEW RANJIT NAGAR,96
+New Delhi,KIRTI NAGAR,97
+New Delhi,MANSAROWER GARDEN,98
+New Delhi,HASTSAL,122
+New Delhi,SANGAM PARK,71
+New Delhi,MODEL TOWN,72
+New Delhi,KAMLA NAGAR,69
+New Delhi,INDER LOK COLONY,74
+New Delhi,KISHAN GANJ,75
+New Delhi,DEPUTY GANJ,76
+New Delhi,KASHMERE GATE,77
+New Delhi,MAJNU KA TILA,78
+New Delhi,JAMA MASJID,79
+New Delhi,TILAK NAGAR,114
+New Delhi,MAJOR BHUPINDAR SINGH NAGAR,115
+New Delhi,VIKASPURI EAST,116
+New Delhi,MOHAN GARDEN,125
+New Delhi,NAWADA,126
+New Delhi,UTTAM NAGAR,127
+New Delhi,BINDAPUR,128
+New Delhi,DABRI,129
+New Delhi,MATIALA,136
+New Delhi,ROSHANPURA,137
+New Delhi,MAYUR VIHAR PHASE-I,209
+New Delhi,ROHINI,21
+New Delhi,DALLOPURA,210
+New Delhi,TRILOK PURI,211
+New Delhi,NEW ASHOK NAGAR,212
+New Delhi,KALYAN PURI,213
+New Delhi,KHICHRIPUR,214
+New Delhi,KONDLI,215
+New Delhi,GHAROLI,216
+New Delhi,VINOD NAGAR,217
+New Delhi,ASHOK VIHAR,68
+New Delhi,WAJIRPUR,67
+New Delhi,SAWAN PARK,66
+New Delhi,NIMRI COLONY,65
+New Delhi,SHAKUR PUR,64
+New Delhi,KOHAT ENCLAVE,63
+New Delhi,RAMPURA,62
+New Delhi,TRI NAGAR,61
+New Delhi,SARASWATI VIHAR,60
+New Delhi,RANI BAGH,59
+New Delhi,PASCHIM VIHAR NORTH,58
+New Delhi,PASCHIM VIHAR SOUTH,57
+New Delhi,SHALIMAR BAGH SOUTH,56
+New Delhi,SHALIMAR BAGH NORTH,55
+New Delhi,PITAMPUR NORTH,54
+New Delhi,PITAMPURA SOUTH,53
+New Delhi,NAHARPUR,52
+New Delhi,ROHINI EAST,51
+New Delhi,ROHINI CENTRAL,50
+New Delhi,MANGOLPURI  WEST,48
+New Delhi,MANGOLPURI  EAST,46
+New Delhi,ROHINI SOUTH,45
+New Delhi,QUAMMRUDDIN NAGAR,44
+New Delhi,NANGLOI EAST,43
+New Delhi,PERAGHARHI,42
+New Delhi,GURU HARKISHAN NAGAR,41
+New Delhi,SULTANPURI  SOUTH,40
+New Delhi,SULTANPURI  EAST,37
+New Delhi,KIRARI SULEMAN NAGAR,35
+New Delhi,KARALA,29
+New Delhi,BEGUMPUR,27
+New Delhi,POOTH KALAN,25
+New Delhi,VIJAY VIHAR,24
+New Delhi,GEETA COLONY,230
+New Delhi,KRISHNA  NAGAR,229
+New Delhi,PREET VIHAR,228
+New Delhi,I.P EXTENTION,227
+New Delhi,ANAND VIHAR,225
+New Delhi,SHAKARPUR,223
+New Delhi,LAXMI NAGAR,222
+New Delhi,RITHALA,22
+New Delhi,MAYUR VIHAR PHASE II,219
+New Delhi,MANDAWALI,218
+New Delhi,KARAM PURA,100
+New Delhi,MAHAVIR ENCLAVE,147
+New Delhi,SAGARPUR,131
+New Delhi,SAGARPUR WEST,132
+New Delhi,MUNDAKA,30
+New Delhi,EAST PATEL NAGAR,95
+New Delhi,WEST PATEL NAGAR,94
+New Delhi,DEV NAGAR,92
+New Delhi,KAROL BAGH,91
+New Delhi,MODEL BASTI,90
+New Delhi,RANA PRATAP BAGH,70
+New Delhi,BAKHTAWAR PUR,4
+New Delhi,ALIPUR,3
+New Delhi,SAHIBABAD DAULAT PUR,26
+New Delhi,BANKNER,2
+New Delhi,MALKAGANJ,9
+New Delhi,JHARODA,8
+New Delhi,MUKUND PUR,6
+New Delhi,BAWANA,28
+New Delhi,BHALSWA,19
+New Delhi,SAMAYPUR BADLI,17
+New Delhi,JAHANGIRPURI-I,16
+New Delhi,SARAI PIPAL THALA,15
+New Delhi,MAHIPALPUR,144
+New Delhi,KAPASHERA,143
+New Delhi,BIJWASAN,141
+New Delhi,ADARASH  NAGAR,14
+New Delhi,DHIR PUR,13
+New Delhi,G.T.B. NAGAR,12
+New Delhi,TIMAR PUR,10
+New Delhi,RAJA GARDEN,101
+New Delhi,RAGHUBIR NAGAR,102
+New Delhi,RAJOURI GARDEN,105
+New Delhi,NANGAL RAYA,110
+New Delhi,HARI NAGAR,111
+New Delhi,SUBHASH NAGAR,112
+New Delhi,MADHU VIHAR,148
+New Delhi,BUDH VIHAR,23
+New Delhi,NANGLOI JAT WEST,31
+New Delhi,NITHARI,34
+New Delhi,SULTANPUR MAJRA,39
+New Delhi,ROHINI NORTH,49
+New Delhi,LIBAS PUR,18
+New Delhi,BRAHAM PURI,254
+New Delhi,DICHAON KALAN,139
+New Delhi,MOTI NAGAR,99
+New Delhi,MANGOLPURI,47
+New Delhi,LAJPAT NAGAR,155
+New Delhi,PALAM,145
+New Delhi,KISHANGARH,172
+New Delhi,VISHWASH NAGAR,226
+New Delhi,MADIPUR,104
+New Delhi,RAJENDER NAGAR,149
+New Delhi,R. K. PURAM,167
+New Delhi,SAFDARJANG ENCLAVE,163
+New Delhi,HAUZ KHAS,164
+New Delhi,KOTLA MUBARAKPUR,158
+New Delhi,MANGLAPURI,130
+New Delhi,MANGOL PURI  NORTH,38
+New Delhi,TAGORE GARDEN,106
+New Delhi,LADOSARAI,169
+New Delhi,NARELA,1
+New Delhi,BHALASWA JAHAGIR PUR,5
+New Delhi,BURARI,7
+New Delhi,PATPARGANJ,220
+New Delhi,PANDAV NAGAR,224
+New Delhi,KISHAN KUNJ,221
+New Delhi,DHARAMPURA,233
+New Delhi,NEW USMANPUR,251
+New Delhi,BHAJANPURA,253
+New Delhi,NEHRU VIHAR,267
+New Delhi,SAID UL AJAIB,177
+New Delhi,SANGAM VIHAR,178
+New Delhi,MEHRAULI,170
+New Delhi,SANGAM VIHAR WEST,186
+New Delhi,TIGRI,179
+New Delhi,ZAKIR NAGAR,205
+New Delhi,NAJAFGARH,138
+New Delhi,JAHANGIR PURI -II,20
+New Delhi,KUNWAR SINGH NAGAR,121
+New Delhi,VIKAS NAGAR,124
+New Delhi,VIKAS PURI,123
+New Delhi,MAHAVIR NAGAR,113
+New Delhi,DARYAGANJ,153
+New Delhi,BALJIT NAGAR,93
+New Delhi,NILOTHI,32
+New Delhi,PRATAP VIHAR,36
+New Delhi,PREM NAGAR,33
+New Delhi,SHASTRI NAGAR,73
+New Delhi,VISHNU GARDEN,107
+New Delhi,TUKHMIR PUR,270
+New Delhi,RAJ NAGAR,142
+Mumbai,Ward A,MUM-A
+Mumbai,Ward B,MUM-B
+Mumbai,Ward C,MUM-C
+Mumbai,Ward D,MUM-D
+Mumbai,Ward E,MUM-E
+Mumbai,Ward F/S,MUM-FS
+Mumbai,Ward G/S,MUM-GS
+Mumbai,Ward F/N,MUM-FN
+Mumbai,Ward G/N,MUM-GN
+Mumbai,Ward N,MUM-N
+Mumbai,Ward R/C,MUM-RC
+Mumbai,Ward S,MUM-S
+Mumbai,Ward T,MUM-T
+Mumbai,Ward K/W,MUM-KW
+Mumbai,Ward R/N,MUM-RN
+Mumbai,Ward M/E,MUM-ME
+Mumbai,Ward M/W,MUM-MW
+Mumbai,Ward H/E,MUM-HE
+Mumbai,Ward K/E,MUM-KE
+Mumbai,Ward P/S,MUM-PS
+Mumbai,Ward P/N,MUM-PN
+Mumbai,Ward R/S,MUM-RS
+Mumbai,Ward H/W,MUM-HW
+Mumbai,Ward L,MUM-L
+Aizawal,Aizawal District (Mizoram),D15-261
+Champhai,Champhai District (Mizoram),D15-262
+Kolasib,Kolasib District (Mizoram),D15-263
+Lawngtlai,Lawngtlai District (Mizoram),D15-264
+Lunglei,Lunglei District (Mizoram),D15-265
+Mamit,Mamit District (Mizoram),D15-266
+Saiha,Saiha District (Mizoram),D15-267
+Serchhip,Serchhip District (Mizoram),D15-268
+Khawzawl,Khawzawl District (Mizoram),D15-996
+Hnahthial,Hnahthial District (Mizoram),D15-994
+Thiruvallur,Thiruvallur District (Tamil Nadu),D33-602
+Chennai,Chennai District (Tamil Nadu),D33-603
+Krishnagiri,Krishnagiri District (Tamil Nadu),D33-631
+Tiruvannamalai,Tiruvannamalai District (Tamil Nadu),D33-606
+Dharmapuri,Dharmapuri District (Tamil Nadu),D33-630
+Salem,Salem District (Tamil Nadu),D33-608
+Erode,Erode District (Tamil Nadu),D33-610
+The Nilgiris,The Nilgiris District (Tamil Nadu),D33-611
+Namakkal,Namakkal District (Tamil Nadu),D33-609
+Perambalur,Perambalur District (Tamil Nadu),D33-615
+Coimbatore,Coimbatore District (Tamil Nadu),D33-632
+Tiruchirappalli,Tiruchirappalli District (Tamil Nadu),D33-614
+Ariyalur,Ariyalur District (Tamil Nadu),D33-616
+Tiruppur,Tiruppur District (Tamil Nadu),D33-633
+Thanjavur,Thanjavur District (Tamil Nadu),D33-620
+Karur,Karur District (Tamil Nadu),D33-613
+Thiruvarur,Thiruvarur District (Tamil Nadu),D33-619
+Dindigul,Dindigul District (Tamil Nadu),D33-612
+Madurai,Madurai District (Tamil Nadu),D33-623
+Theni,Theni District (Tamil Nadu),D33-624
+Virudhunagar,Virudhunagar District (Tamil Nadu),D33-625
+Thoothukkudi,Thoothukkudi District (Tamil Nadu),D33-627
+Kanniyakumari,Kanniyakumari District (Tamil Nadu),D33-629
+Viluppuram,Viluppuram District (Tamil Nadu),D33-607
+Cuddalore,Cuddalore District (Tamil Nadu),D33-617
+Pudukkottai,Pudukkottai District (Tamil Nadu),D33-621
+Sivaganga,Sivaganga District (Tamil Nadu),D33-622
+Ramanathapuram,Ramanathapuram District (Tamil Nadu),D33-626
+Nagapattinam,Nagapattinam District (Tamil Nadu),D33-618
+Kallakurichi,Kallakurichi District (Tamil Nadu),D33-729
+Tenkasi,Tenkasi District (Tamil Nadu),D33-000
+Tirunelveli,Tirunelveli District (Tamil Nadu),D33-628
+Vellore,Vellore District (Tamil Nadu),D33-605
+Ranipet,Ranipet District (Tamil Nadu),D33-000
+Tirupathur,Tirupathur District (Tamil Nadu),D33-000
+Kancheepuram,Kancheepuram District (Tamil Nadu),D33-604
+Chengalpattu,Chengalpattu District (Tamil Nadu),D33-000
+Burhanpur,Burhanpur District (Madhya Pradesh),D23-467
+Gondiya,Gondiya District (Maharashtra),D27-507
+Bhandara,Bhandara District (Maharashtra),D27-506
+Jalgaon,Jalgaon District (Maharashtra),D27-499
+Mahasamund,Mahasamund District (Chhattisgarh),D22-411
+Wardha,Wardha District (Maharashtra),D27-504
+Buldana,Buldana District (Maharashtra),D27-500
+Valsad,Valsad District (Gujarat),D24-491
+Akola,Akola District (Maharashtra),D27-501
+Bhadrak,Bhadrak District (Odisha),D21-378
+Dhenkanal,Dhenkanal District (Odisha),D21-383
+Jajapur,Jajapur District (Odisha),D21-382
+Subarnapur,Subarnapur District (Odisha),D21-392
+Nuapada,Nuapada District (Odisha),D21-394
+Balangir,Balangir District (Odisha),D21-393
+Nashik,Nashik District (Maharashtra),D27-516
+Baudh,Baudh District (Odisha),D21-391
+Gadchiroli,Gadchiroli District (Maharashtra),D27-508
+Washim,Washim District (Maharashtra),D27-502
+Cuttack,Cuttack District (Odisha),D21-381
+Chandrapur,Chandrapur District (Maharashtra),D27-509
+Yavatmal,Yavatmal District (Maharashtra),D27-510
+Kandhamal,Kandhamal District (Odisha),D21-390
+Jalna,Jalna District (Maharashtra),D27-514
+Nayagarh,Nayagarh District (Odisha),D21-385
+Uttar Bastar Kanker,Uttar Bastar Kanker District (Chhattisgarh),D22-413
+Khordha,Khordha District (Odisha),D21-386
+Kalahandi,Kalahandi District (Odisha),D21-395
+Jagatsinghapur,Jagatsinghapur District (Odisha),D21-380
+Puri,Puri District (Odisha),D21-387
+Ahmadnagar,Ahmadnagar District (Maharashtra),D27-522
+Nabarangapur,Nabarangapur District (Odisha),D21-397
+Hingoli,Hingoli District (Maharashtra),D27-512
+Rayagada,Rayagada District (Odisha),D21-396
+Nanded,Nanded District (Maharashtra),D27-511
+Narayanpur,Narayanpur District (Chhattisgarh),D22-415
+Parbhani,Parbhani District (Maharashtra),D27-513
+Pune,Pune District (Maharashtra),D27-521
+Bid,Bid District (Maharashtra),D27-523
+Koraput,Koraput District (Odisha),D21-398
+Srikakulam,Srikakulam District (Andhra Pradesh),D37-542
+Vizianagaram,Vizianagaram District (Andhra Pradesh),D37-543
+Latur,Latur District (Maharashtra),D27-524
+Osmanabad,Osmanabad District (Maharashtra),D27-525
+Malkangiri,Malkangiri District (Odisha),D21-399
+Solapur,Solapur District (Maharashtra),D27-526
+Visakhapatnam,Visakhapatnam District (Andhra Pradesh),D37-544
+Bidar,Bidar District (Karnataka),D29-558
+Satara,Satara District (Maharashtra),D27-527
+Ratnagiri,Ratnagiri District (Maharashtra),D27-528
+Kalaburagi,Kalaburagi District (Karnataka),D29-579
+Sangli,Sangli District (Maharashtra),D27-531
+Kolhapur,Kolhapur District (Maharashtra),D27-530
+Krishna,Krishna District (Andhra Pradesh),D37-547
+Belagavi,Belagavi District (Karnataka),D29-555
+Yadgir,Yadgir District (Karnataka),D29-580
+Bagalkote,Bagalkote District (Karnataka),D29-556
+Sindhudurg,Sindhudurg District (Maharashtra),D27-529
+Guntur,Guntur District (Andhra Pradesh),D37-548
+East Godavari,East Godavari District (Andhra Pradesh),D37-545
+Raichur,Raichur District (Karnataka),D29-559
+Prakasam,Prakasam District (Andhra Pradesh),D37-549
+Kurnool,Kurnool District (Andhra Pradesh),D37-552
+Koppal,Koppal District (Karnataka),D29-560
+Gadag,Gadag District (Karnataka),D29-561
+North Goa,North Goa District (Goa),D30-585
+Ballari,Ballari District (Karnataka),D29-565
+Dharwad,Dharwad District (Karnataka),D29-562
+Uttara Kannada,Uttara Kannada District (Karnataka),D29-563
+South Goa,South Goa District (Goa),D30-586
+Haveri,Haveri District (Karnataka),D29-564
+Anantapur,Anantapur District (Andhra Pradesh),D37-553
+S.P.S. Nellore,S.P.S. Nellore District (Andhra Pradesh),D37-550
+Chitradurga,Chitradurga District (Karnataka),D29-566
+Davanagere,Davanagere District (Karnataka),D29-567
+Shivamogga,Shivamogga District (Karnataka),D29-568
+Udupi,Udupi District (Karnataka),D29-569
+Chikkamagaluru,Chikkamagaluru District (Karnataka),D29-570
+Chikkaballapura,Chikkaballapura District (Karnataka),D29-582
+Hassan,Hassan District (Karnataka),D29-574
+Kolar,Kolar District (Karnataka),D29-581
+Bengaluru Rural,Bengaluru Rural District (Karnataka),D29-583
+Dakshina Kannada,Dakshina Kannada District (Karnataka),D29-575
+Bengaluru,Bengaluru District (Karnataka),D29-572
+Kasaragod,Kasaragod District (Kerala),D32-588
+Kodagu,Kodagu District (Karnataka),D29-576
+Chamarajanagara,Chamarajanagara District (Karnataka),D29-578
+Wayanad,Wayanad District (Kerala),D32-590
+Kozhikode,Kozhikode District (Kerala),D32-591
+Malappuram,Malappuram District (Kerala),D32-592
+Palakkad,Palakkad District (Kerala),D32-593
+Thrissur,Thrissur District (Kerala),D32-594
+Idukki,Idukki District (Kerala),D32-596
+Ernakulam,Ernakulam District (Kerala),D32-595
+Alappuzha,Alappuzha District (Kerala),D32-598
+Kottayam,Kottayam District (Kerala),D32-597
+Pathanamthitta,Pathanamthitta District (Kerala),D32-599
+Kollam,Kollam District (Kerala),D32-600
+Thiruvananthapuram,Thiruvananthapuram District (Kerala),D32-601
+West Godavari,West Godavari District (Andhra Pradesh),D37-546
+Dakshin Bastar Dantewada,Dakshin Bastar Dantewada District (Chhattisgarh),D22-416
+Bastar,Bastar District (Chhattisgarh),D22-414
+Kondagaon,Kondagaon District (Chhattisgarh),D22-722
+Gariaband,Gariaband District (Chhattisgarh),D22-720
+Raipur,Raipur District (Chhattisgarh),D22-410
+Durg,Durg District (Chhattisgarh),D22-409
+Thane,Thane District (Maharashtra),D27-517
+Adilabad,Adilabad District (Telangana),D36-532
+Hyderabad,Hyderabad District (Telangana),D36-536
+Jagitial,Jagitial District (Telangana),D36-737
+Jangoan,Jangoan District (Telangana),D36-752
+Mulugu,Mulugu District (Telangana),D36-780
+Jogulamba Gadwal,Jogulamba Gadwal District (Telangana),D36-744
+Kamareddy,Kamareddy District (Telangana),D36-736
+Karimnagar,Karimnagar District (Telangana),D36-534
+Khammam,Khammam District (Telangana),D36-541
+Kumuram Bheem Asifabad,Kumuram Bheem Asifabad District (Telangana),D36-733
+Mahabubabad,Mahabubabad District (Telangana),D36-751
+Mahabubnagar,Mahabubnagar District (Telangana),D36-538
+Mancherial,Mancherial District (Telangana),D36-735
+Medak,Medak District (Telangana),D36-535
+Medchal Malkajgiri,Medchal Malkajgiri District (Telangana),D36-742
+Nagarkurnool,Nagarkurnool District (Telangana),D36-746
+Nalgonda,Nalgonda District (Telangana),D36-539
+Nirmal,Nirmal District (Telangana),D36-734
+Nizamabad,Nizamabad District (Telangana),D36-533
+Peddapalli,Peddapalli District (Telangana),D36-738
+Rajanna Sircilla,Rajanna Sircilla District (Telangana),D36-739
+Ranga Reddy,Ranga Reddy District (Telangana),D36-537
+Sangareddy,Sangareddy District (Telangana),D36-740
+Siddipet,Siddipet District (Telangana),D36-741
+Suryapet,Suryapet District (Telangana),D36-748
+Vikarabad,Vikarabad District (Telangana),D36-743
+Wanaparthy,Wanaparthy District (Telangana),D36-745
+Warangal Rural,Warangal Rural District (Telangana),D36-749
+Warangal Urban,Warangal Urban District (Telangana),D36-540
+Yadadri Bhuvanagiri,Yadadri Bhuvanagiri District (Telangana),D36-747
+South 24 Parganas,South 24 Parganas District (West Bengal),D19-343
+Amreli,Amreli District (Gujarat),D24-480
+Anugul,Anugul District (Odisha),D21-384
+The Dangs,The Dangs District (Gujarat),D24-489
+Dhamtari,Dhamtari District (Chhattisgarh),D22-412
+Kendrapara,Kendrapara District (Odisha),D21-379
+Dadra and Nagar Haveli,Dadra and Nagar Haveli District (Dadra and Nagar Haveli),D26-496
+Palghar,Palghar District (Maharashtra),D27-732
+Ganjam,Ganjam District (Odisha),D21-388
+Gajapati,Gajapati District (Odisha),D21-389
+Y.S.R.,Y.S.R. District (Andhra Pradesh),D37-551
+Tumakuru,Tumakuru District (Karnataka),D29-571
+Chittoor,Chittoor District (Andhra Pradesh),D37-554
+Ramanagara,Ramanagara District (Karnataka),D29-584
+Mandya,Mandya District (Karnataka),D29-573
+Mysuru,Mysuru District (Karnataka),D29-577
+Kannur,Kannur District (Kerala),D32-589
+Puducherry,Puducherry District (Puducherry),D34-635
+Balod,Balod District (Chhattisgarh),D22-719
+Bhadradri Kothagudem,Bhadradri Kothagudem District (Telangana),D36-753
+Vadodara,Vadodara District (Gujarat),D24-486
+Medinipur West,Medinipur West District (West Bengal),D19-344
+Seoni,Seoni District (Madhya Pradesh),D23-456
+Alirajpur,Alirajpur District (Madhya Pradesh),D23-465
+Chhindwara,Chhindwara District (Madhya Pradesh),D23-455
+Harda,Harda District (Madhya Pradesh),D23-448
+West Nimar,West Nimar District (Madhya Pradesh),D23-440
+Medinipur East,Medinipur East District (West Bengal),D19-345
+Mayurbhanj,Mayurbhanj District (Odisha),D21-376
+Bharuch,Bharuch District (Gujarat),D24-488
+Sundargarh,Sundargarh District (Odisha),D21-374
+Kabeerdham,Kabeerdham District (Chhattisgarh),D22-407
+East Nimar,East Nimar District (Madhya Pradesh),D23-466
+Porbandar,Porbandar District (Gujarat),D24-478
+Balaghat,Balaghat District (Madhya Pradesh),D23-457
+Narmada,Narmada District (Gujarat),D24-487
+Barwani,Barwani District (Madhya Pradesh),D23-441
+Janjgir Champa,Janjgir Champa District (Chhattisgarh),D22-405
+Nandurbar,Nandurbar District (Maharashtra),D27-497
+Kendujhar,Kendujhar District (Odisha),D21-375
+Baleshwar,Baleshwar District (Odisha),D21-377
+Jharsuguda,Jharsuguda District (Odisha),D21-371
+Bametara,Bametara District (Chhattisgarh),D22-718
+Rajnandgaon,Rajnandgaon District (Chhattisgarh),D22-408
+Amravati,Amravati District (Maharashtra),D27-503
+Surat,Surat District (Gujarat),D24-492
+Dhule,Dhule District (Maharashtra),D27-498
+Tapi,Tapi District (Gujarat),D24-493
+Bargarh,Bargarh District (Odisha),D21-370
+Nagpur,Nagpur District (Maharashtra),D27-505
+Baloda Bazar,Baloda Bazar District (Chhattisgarh),D22-721
+Mungeli,Mungeli District (Chhattisgarh),D22-717
+Botad,Botad District (Gujarat),D24-726
+Chota Udaipur,Chota Udaipur District (Gujarat),D24-731
+Gir Somnath,Gir Somnath District (Gujarat),D24-729
+Jhargram,Jhargram District (West Bengal),D19-776
+Rajkot,Rajkot District (Gujarat),D24-476
+Bhavnagar,Bhavnagar District (Gujarat),D24-481
+Betul,Betul District (Madhya Pradesh),D23-447
+Junagadh,Junagadh District (Gujarat),D24-479
+Debagarh,Debagarh District (Odisha),D21-373
+Jamnagar,Jamnagar District (Gujarat),D24-477
+Devbhumi Dwarka,Devbhumi Dwarka District (Gujarat),D24-728
+Aurangabad,Aurangabad District (Maharashtra),D27-515
+Vijayapura,Vijayapura District (Karnataka),D29-557
+Bijapur,Bijapur District (Chhattisgarh),D22-417
+Raigarh,Raigarh District (Maharashtra),D27-520
+Bilaspur,Bilaspur District (Chhattisgarh),D22-406
+Karaikal,Karaikal District (Puducherry),D34-637
+Mahe,Mahe District (Puducherry),D34-636
+Yanam,Yanam District (Puducherry),D34-634
+Sambalpur,Sambalpur District (Odisha),D21-372
+Navsari,Navsari District (Gujarat),D24-490
+Lakshadweep,Lakshadweep District (Lakshadweep),D31-587
+Daman,Daman District (Daman and Diu),D25-495
+Diu,Diu District (Daman and Diu),D25-494
+Mumbai Suburban,Mumbai Suburban District (Maharashtra),D27-518
+Jayashankar,Jayashankar District (Telangana),D36-750
+Narayanpet,Narayanpet District (Telangana),D36-781
+Sukma,Sukma District (Chhattisgarh),D22-723
+Upper Subansiri,Upper Subansiri District (Arunachal Pradesh),D12-249
+Anjaw,Anjaw District (Arunachal Pradesh),D12-260
+Tinsukia,Tinsukia District (Assam),D18-309
+Dhemaji,Dhemaji District (Assam),D18-308
+Changlang,Changlang District (Arunachal Pradesh),D12-253
+Dibrugarh,Dibrugarh District (Assam),D18-310
+Tawang,Tawang District (Arunachal Pradesh),D12-245
+Papum Pare,Papum Pare District (Arunachal Pradesh),D12-248
+Lakhimpur,Lakhimpur District (Assam),D18-307
+Tirap,Tirap District (Arunachal Pradesh),D12-254
+Sivasagar,Sivasagar District (Assam),D18-311
+Jorhat,Jorhat District (Assam),D18-312
+Mon,Mon District (Nagaland),D13-261
+Sonitpur,Sonitpur District (Assam),D18-306
+Golaghat,Golaghat District (Assam),D18-313
+Longleng,Longleng District (Nagaland),D13-268
+Mokokchung,Mokokchung District (Nagaland),D13-262
+Udalguri,Udalguri District (Assam),D18-326
+Chirang,Chirang District (Assam),D18-320
+Baksa,Baksa District (Assam),D18-324
+Nagaon,Nagaon District (Assam),D18-305
+Kokrajhar,Kokrajhar District (Assam),D18-300
+Darrang,Darrang District (Assam),D18-325
+Tuensang,Tuensang District (Nagaland),D13-267
+Barpeta,Barpeta District (Assam),D18-303
+Nalbari,Nalbari District (Assam),D18-323
+Morigaon,Morigaon District (Assam),D18-304
+Kamrup,Kamrup District (Assam),D18-321
+Bongaigaon,Bongaigaon District (Assam),D18-319
+Dhubri,Dhubri District (Assam),D18-301
+Kamrup Metropolitan,Kamrup Metropolitan District (Assam),D18-322
+Kiphire,Kiphire District (Nagaland),D13-269
+Goalpara,Goalpara District (Assam),D18-302
+Ribhoi,Ribhoi District (Meghalaya),D17-297
+Dima Hasao,Dima Hasao District (Assam),D18-315
+Kamjong,Kamjong District (Manipur),D14-770
+West Khasi Hills,West Khasi Hills District (Meghalaya),D17-296
+Peren,Peren District (Nagaland),D13-271
+Senapati,Senapati District (Manipur),D14-272
+East Jaintia Hills,East Jaintia Hills District (Meghalaya),D17-714
+East Khasi Hills,East Khasi Hills District (Meghalaya),D17-298
+Tamenglong,Tamenglong District (Manipur),D14-273
+South Garo Hills,South Garo Hills District (Meghalaya),D17-295
+Cachar,Cachar District (Assam),D18-316
+Imphal West,Imphal West District (Manipur),D14-277
+Karimganj,Karimganj District (Assam),D18-317
+Hailakandi,Hailakandi District (Assam),D18-318
+Kakching,Kakching District (Manipur),D14-768
+Bishnupur,Bishnupur District (Manipur),D14-275
+Chandel,Chandel District (Manipur),D14-280
+Churachandpur,Churachandpur District (Manipur),D14-274
+North Tripura,North Tripura District (Tripura),D16-292
+Dhalai,Dhalai District (Tripura),D16-291
+Sipahijala,Sipahijala District (Tripura),D16-707
+Gomati,Gomati District (Tripura),D16-709
+Wokha,Wokha District (Nagaland),D13-264
+Zunheboto,Zunheboto District (Nagaland),D13-263
+Phek,Phek District (Nagaland),D13-266
+West Garo Hills,West Garo Hills District (Meghalaya),D17-293
+East Garo Hills,East Garo Hills District (Meghalaya),D17-294
+Kohima,Kohima District (Nagaland),D13-270
+Dimapur,Dimapur District (Nagaland),D13-265
+East Siang,East Siang District (Arunachal Pradesh),D12-251
+Lohit,Lohit District (Arunachal Pradesh),D12-259
+Kurung Kumey,Kurung Kumey District (Arunachal Pradesh),D12-256
+Lower Subansiri,Lower Subansiri District (Arunachal Pradesh),D12-255
+East Kameng,East Kameng District (Arunachal Pradesh),D12-247
+West Kameng,West Kameng District (Arunachal Pradesh),D12-246
+West Jaintia Hills,West Jaintia Hills District (Meghalaya),D17-299
+South West Khasi Hills,South West Khasi Hills District (Meghalaya),D17-713
+North Garo Hills,North Garo Hills District (Meghalaya),D17-712
+South West Garo Hills,South West Garo Hills District (Meghalaya),D17-711
+Khowai,Khowai District (Tripura),D16-708
+West Tripura,West Tripura District (Tripura),D16-289
+South Tripura,South Tripura District (Tripura),D16-290
+Unokoti,Unokoti District (Tripura),D16-710
+Charaideo,Charaideo District (Assam),D18-755
+Majuli,Majuli District (Assam),D18-760
+Biswanath,Biswanath District (Assam),D18-756
+Hojai,Hojai District (Assam),D18-757
+South Salmara Mancachar,South Salmara Mancachar District (Assam),D18-758
+Karbi Anglong,Karbi Anglong District (Assam),D18-314
+West Karbi Anglong,West Karbi Anglong District (Assam),D18-759
+Kra Daadi,Kra Daadi District (Arunachal Pradesh),D12-763
+Namsai,Namsai District (Arunachal Pradesh),D12-762
+Longding,Longding District (Arunachal Pradesh),D12-761
+Imphal East,Imphal East District (Manipur),D14-278
+Jiribam,Jiribam District (Manipur),D14-766
+Kangpokpi,Kangpokpi District (Manipur),D14-767
+Thoubal,Thoubal District (Manipur),D14-276
+Tengnoupal,Tengnoupal District (Manipur),D14-769
+Ukhrul,Ukhrul District (Manipur),D14-279
+Noney,Noney District (Manipur),D14-771
+Pherzawl,Pherzawl District (Manipur),D14-772
+Upper Siang,Upper Siang District (Arunachal Pradesh),D12-252
+Lower Siang,Lower Siang District (Arunachal Pradesh),D12-779
+Upper Dibang Valley,Upper Dibang Valley District (Arunachal Pradesh),D12-257
+Lower Dibang Valley,Lower Dibang Valley District (Arunachal Pradesh),D12-258
+Siang,Siang District (Arunachal Pradesh),D12-764
+Shi Yomi,Shi Yomi District (Arunachal Pradesh),D12-785
+Pakke Kessang,Pakke Kessang District (Arunachal Pradesh),D12-783
+West Siang,West Siang District (Arunachal Pradesh),D12-250
+Lepa Rada,Lepa Rada District (Arunachal Pradesh),D12-784
+Kamle,Kamle District (Arunachal Pradesh),D12-778
+North and Middle Andaman,North and Middle Andaman District (Andaman and Nicobar),D35-639
+South Andaman,South Andaman District (Andaman and Nicobar),D35-640
+Nicobars,Nicobars District (Andaman and Nicobar),D35-638
+Amroha,Amroha District (Uttar Pradesh),D09-137
+Churu,Churu District (Rajasthan),D08-102
+Hapur,Hapur District (Uttar Pradesh),D09-705
+North Delhi,North Delhi District (Delhi),D07-091
+Jhajjar,Jhajjar District (Haryana),D06-083
+Bareilly,Bareilly District (Uttar Pradesh),D09-150
+Pilibhit,Pilibhit District (Uttar Pradesh),D09-151
+North East Delhi,North East Delhi District (Delhi),D07-092
+West Delhi,West Delhi District (Delhi),D07-096
+Bulandshahr,Bulandshahr District (Uttar Pradesh),D09-142
+East Delhi,East Delhi District (Delhi),D07-093
+South West Delhi,South West Delhi District (Delhi),D07-097
+Central Delhi,Central Delhi District (Delhi),D07-095
+Gautam Buddha Nagar,Gautam Buddha Nagar District (Uttar Pradesh),D09-141
+Kheri,Kheri District (Uttar Pradesh),D09-153
+South Delhi,South Delhi District (Delhi),D07-098
+Jhunjhunu,Jhunjhunu District (Rajasthan),D08-103
+Gurugram,Gurugram District (Haryana),D06-086
+Faridabad,Faridabad District (Haryana),D06-088
+Mahendragarh,Mahendragarh District (Haryana),D06-084
+Rewari,Rewari District (Haryana),D06-085
+Budaun,Budaun District (Uttar Pradesh),D09-149
+Jaisalmer,Jaisalmer District (Rajasthan),D08-114
+Bahraich,Bahraich District (Uttar Pradesh),D09-180
+Nuh,Nuh District (Haryana),D06-087
+Shahjahanpur,Shahjahanpur District (Uttar Pradesh),D09-152
+Sikar,Sikar District (Rajasthan),D08-111
+Palwal,Palwal District (Haryana),D06-089
+Alwar,Alwar District (Rajasthan),D08-104
+North  District,North  District District (Sikkim),D11-241
+Aligarh,Aligarh District (Uttar Pradesh),D09-143
+Kasganj,Kasganj District (Uttar Pradesh),D09-202
+Mathura,Mathura District (Uttar Pradesh),D09-145
+Jaipur,Jaipur District (Rajasthan),D08-110
+Shrawasti,Shrawasti District (Uttar Pradesh),D09-181
+Jodhpur,Jodhpur District (Rajasthan),D08-113
+Sitapur,Sitapur District (Uttar Pradesh),D09-154
+Bharatpur,Bharatpur District (Rajasthan),D08-105
+Hathras,Hathras District (Uttar Pradesh),D09-144
+Nagaur,Nagaur District (Rajasthan),D08-112
+Etah,Etah District (Uttar Pradesh),D09-201
+Hardoi,Hardoi District (Uttar Pradesh),D09-155
+Farrukhabad,Farrukhabad District (Uttar Pradesh),D09-159
+West District,West District District (Sikkim),D11-242
+South District,South District District (Sikkim),D11-243
+East District,East District District (Sikkim),D11-244
+Firozabad,Firozabad District (Uttar Pradesh),D09-147
+West Champaran,West Champaran District (Bihar),D10-203
+Siddharthnagar,Siddharthnagar District (Uttar Pradesh),D09-184
+Mainpuri,Mainpuri District (Uttar Pradesh),D09-148
+Mahrajganj,Mahrajganj District (Uttar Pradesh),D09-187
+Agra,Agra District (Uttar Pradesh),D09-146
+Gonda,Gonda District (Uttar Pradesh),D09-183
+Bara Banki,Bara Banki District (Uttar Pradesh),D09-176
+Darjeeling,Darjeeling District (West Bengal),D19-327
+Dausa,Dausa District (Rajasthan),D08-109
+Kushinagar,Kushinagar District (Uttar Pradesh),D09-189
+Kannauj,Kannauj District (Uttar Pradesh),D09-160
+Lucknow,Lucknow District (Uttar Pradesh),D09-157
+Jalpaiguri,Jalpaiguri District (West Bengal),D19-328
+Basti,Basti District (Uttar Pradesh),D09-185
+Gorakhpur,Gorakhpur District (Uttar Pradesh),D09-188
+Sant Kabir Nagar,Sant Kabir Nagar District (Uttar Pradesh),D09-186
+Karauli,Karauli District (Rajasthan),D08-107
+East Champaran,East Champaran District (Bihar),D10-204
+Unnao,Unnao District (Uttar Pradesh),D09-156
+Etawah,Etawah District (Uttar Pradesh),D09-161
+Dhaulpur,Dhaulpur District (Rajasthan),D08-106
+Kanpur Nagar,Kanpur Nagar District (Uttar Pradesh),D09-164
+Auraiya,Auraiya District (Uttar Pradesh),D09-162
+Morena,Morena District (Madhya Pradesh),D23-419
+Barmer,Barmer District (Rajasthan),D08-115
+Faizabad,Faizabad District (Uttar Pradesh),D09-177
+Kanpur Dehat,Kanpur Dehat District (Uttar Pradesh),D09-163
+Bhind,Bhind District (Madhya Pradesh),D23-420
+Sawai Madhopur,Sawai Madhopur District (Rajasthan),D08-108
+Deoria,Deoria District (Uttar Pradesh),D09-190
+Sitamarhi,Sitamarhi District (Bihar),D10-206
+Tonk,Tonk District (Rajasthan),D08-120
+Sheohar,Sheohar District (Bihar),D10-205
+Sultanpur,Sultanpur District (Uttar Pradesh),D09-179
+Pali,Pali District (Rajasthan),D08-118
+Gopalganj,Gopalganj District (Bihar),D10-217
+Ambedkar Nagar,Ambedkar Nagar District (Uttar Pradesh),D09-178
+Rae Bareli,Rae Bareli District (Uttar Pradesh),D09-158
+Jalaun,Jalaun District (Uttar Pradesh),D09-165
+Azamgarh,Azamgarh District (Uttar Pradesh),D09-191
+Gwalior,Gwalior District (Madhya Pradesh),D23-421
+Sheopur,Sheopur District (Madhya Pradesh),D23-418
+Mau,Mau District (Uttar Pradesh),D09-192
+Fatehpur,Fatehpur District (Uttar Pradesh),D09-172
+Ballia,Ballia District (Uttar Pradesh),D09-193
+Jaunpur,Jaunpur District (Uttar Pradesh),D09-194
+Bhilwara,Bhilwara District (Rajasthan),D08-122
+Samastipur,Samastipur District (Bihar),D10-221
+Jalor,Jalor District (Rajasthan),D08-116
+Bundi,Bundi District (Rajasthan),D08-121
+Katihar,Katihar District (Bihar),D10-212
+Jhansi,Jhansi District (Uttar Pradesh),D09-166
+Shivpuri,Shivpuri District (Madhya Pradesh),D23-423
+Kota,Kota District (Rajasthan),D08-127
+Banda,Banda District (Uttar Pradesh),D09-170
+Ghazipur,Ghazipur District (Uttar Pradesh),D09-195
+Kaushambi,Kaushambi District (Uttar Pradesh),D09-174
+Khagaria,Khagaria District (Bihar),D10-223
+Bhojpur,Bhojpur District (Bihar),D10-231
+Prayagraj,Prayagraj District (Uttar Pradesh),D09-175
+Buxar,Buxar District (Bihar),D10-232
+Dakshin Dinajpur,Dakshin Dinajpur District (West Bengal),D19-331
+Maldah,Maldah District (West Bengal),D19-332
+Tikamgarh,Tikamgarh District (Madhya Pradesh),D23-424
+Varanasi,Varanasi District (Uttar Pradesh),D09-197
+Darbhanga,Darbhanga District (Bihar),D10-215
+Saharsa,Saharsa District (Bihar),D10-214
+Sirohi,Sirohi District (Rajasthan),D08-117
+Chitrakoot,Chitrakoot District (Uttar Pradesh),D09-171
+Chandauli,Chandauli District (Uttar Pradesh),D09-196
+Bhadohi,Bhadohi District (Uttar Pradesh),D09-198
+Baran,Baran District (Rajasthan),D08-128
+Sahibganj,Sahibganj District (Jharkhand),D20-352
+Kaimur Bhabhua,Kaimur Bhabhua District (Bihar),D10-233
+Rohtas,Rohtas District (Bihar),D10-234
+Udaipur,Udaipur District (Rajasthan),D08-130
+Godda,Godda District (Jharkhand),D20-351
+Mirzapur,Mirzapur District (Uttar Pradesh),D09-199
+Lalitpur,Lalitpur District (Uttar Pradesh),D09-167
+Jamui,Jamui District (Bihar),D10-238
+Neemuch,Neemuch District (Madhya Pradesh),D23-432
+Banka,Banka District (Bihar),D10-225
+Rewa,Rewa District (Madhya Pradesh),D23-430
+Satna,Satna District (Madhya Pradesh),D23-429
+Guna,Guna District (Madhya Pradesh),D23-458
+Nawada,Nawada District (Bihar),D10-237
+Gaya,Gaya District (Bihar),D10-236
+Ashoknagar,Ashoknagar District (Madhya Pradesh),D23-459
+Banas Kantha,Banas Kantha District (Gujarat),D24-469
+Jhalawar,Jhalawar District (Rajasthan),D08-129
+Murshidabad,Murshidabad District (West Bengal),D19-333
+Sonbhadra,Sonbhadra District (Uttar Pradesh),D09-200
+Pakur,Pakur District (Jharkhand),D20-353
+Mandsaur,Mandsaur District (Madhya Pradesh),D23-433
+Munger,Munger District (Bihar),D10-226
+Giridih,Giridih District (Jharkhand),D20-349
+Dumka,Dumka District (Jharkhand),D20-362
+Singrauli,Singrauli District (Madhya Pradesh),D23-463
+Birbhum,Birbhum District (West Bengal),D19-334
+Deoghar,Deoghar District (Jharkhand),D20-350
+Palamu,Palamu District (Jharkhand),D20-358
+Sidhi,Sidhi District (Madhya Pradesh),D23-462
+Chatra,Chatra District (Jharkhand),D20-347
+Garhwa,Garhwa District (Jharkhand),D20-346
+Sagar,Sagar District (Madhya Pradesh),D23-427
+Patan,Patan District (Gujarat),D24-470
+Damoh,Damoh District (Madhya Pradesh),D23-428
+Shajapur,Shajapur District (Madhya Pradesh),D23-436
+Vidisha,Vidisha District (Madhya Pradesh),D23-443
+Mahesana,Mahesana District (Gujarat),D24-471
+Rajgarh,Rajgarh District (Madhya Pradesh),D23-442
+Shahdol,Shahdol District (Madhya Pradesh),D23-460
+Nadia,Nadia District (West Bengal),D19-336
+Jamtara,Jamtara District (Jharkhand),D20-363
+Dungarpur,Dungarpur District (Rajasthan),D08-124
+Katni,Katni District (Madhya Pradesh),D23-450
+Dhanbad,Dhanbad District (Jharkhand),D20-354
+Banswara,Banswara District (Rajasthan),D08-125
+Umaria,Umaria District (Madhya Pradesh),D23-431
+Latehar,Latehar District (Jharkhand),D20-359
+Ratlam,Ratlam District (Madhya Pradesh),D23-434
+Bokaro,Bokaro District (Jharkhand),D20-355
+Ramgarh,Ramgarh District (Jharkhand),D20-361
+Bhopal,Bhopal District (Madhya Pradesh),D23-444
+Purba Bardhaman,Purba Bardhaman District (West Bengal),D19-335
+Koriya,Koriya District (Chhattisgarh),D22-400
+Ujjain,Ujjain District (Madhya Pradesh),D23-435
+Gandhinagar,Gandhinagar District (Gujarat),D24-473
+Ahmadabad,Ahmadabad District (Gujarat),D24-474
+Raisen,Raisen District (Madhya Pradesh),D23-446
+Purulia,Purulia District (West Bengal),D19-340
+Sehore,Sehore District (Madhya Pradesh),D23-445
+Ranchi,Ranchi District (Jharkhand),D20-364
+Bankura,Bankura District (West Bengal),D19-339
+Lohardaga,Lohardaga District (Jharkhand),D20-356
+Panch Mahals,Panch Mahals District (Gujarat),D24-484
+Jabalpur,Jabalpur District (Madhya Pradesh),D23-451
+Gumla,Gumla District (Jharkhand),D20-366
+Dohad,Dohad District (Gujarat),D24-485
+Dewas,Dewas District (Madhya Pradesh),D23-437
+Anuppur,Anuppur District (Madhya Pradesh),D23-461
+Jhabua,Jhabua District (Madhya Pradesh),D23-464
+North 24 Parganas,North 24 Parganas District (West Bengal),D19-337
+Dindori,Dindori District (Madhya Pradesh),D23-453
+Hooghly,Hooghly District (West Bengal),D19-338
+Khunti,Khunti District (Jharkhand),D20-365
+Narsimhapur,Narsimhapur District (Madhya Pradesh),D23-452
+Dhar,Dhar District (Madhya Pradesh),D23-438
+Jashpur,Jashpur District (Chhattisgarh),D22-402
+Indore,Indore District (Madhya Pradesh),D23-439
+Saraikela-kharsawan,Saraikela-kharsawan District (Jharkhand),D20-369
+Mandla,Mandla District (Madhya Pradesh),D23-454
+Purbi Singhbhum,Purbi Singhbhum District (Jharkhand),D20-357
+Hoshangabad,Hoshangabad District (Madhya Pradesh),D23-449
+Korba,Korba District (Chhattisgarh),D22-404
+Pashchimi Singhbhum,Pashchimi Singhbhum District (Jharkhand),D20-368
+Howrah,Howrah District (West Bengal),D19-341
+Simdega,Simdega District (Jharkhand),D20-367
+Kolkata,Kolkata District (West Bengal),D19-342
+Kodarma,Kodarma District (Jharkhand),D20-348
+Hazaribagh,Hazaribagh District (Jharkhand),D20-360
+Vaishali,Vaishali District (Bihar),D10-220
+Begusarai,Begusarai District (Bihar),D10-222
+Bhagalpur,Bhagalpur District (Bihar),D10-224
+Lakhisarai,Lakhisarai District (Bihar),D10-227
+Sheikhpura,Sheikhpura District (Bihar),D10-228
+Arwal,Arwal District (Bihar),D10-240
+Jehanabad,Jehanabad District (Bihar),D10-239
+Nalanda,Nalanda District (Bihar),D10-229
+Patna,Patna District (Bihar),D10-230
+Saran,Saran District (Bihar),D10-219
+Siwan,Siwan District (Bihar),D10-218
+Muzaffarpur,Muzaffarpur District (Bihar),D10-216
+Madhepura,Madhepura District (Bihar),D10-213
+Araria,Araria District (Bihar),D10-209
+Supaul,Supaul District (Bihar),D10-208
+Madhubani,Madhubani District (Bihar),D10-207
+Purnia,Purnia District (Bihar),D10-211
+Surajpur,Surajpur District (Chhattisgarh),D22-715
+Surguja,Surguja District (Chhattisgarh),D22-401
+Aravalli,Aravalli District (Gujarat),D24-725
+Mahisagar,Mahisagar District (Gujarat),D24-730
+Amethi,Amethi District (Uttar Pradesh),D09-706
+Ghaziabad,Ghaziabad District (Uttar Pradesh),D09-140
+Agar Malwa,Agar Malwa District (Madhya Pradesh),D23-724
+Shahdara,Shahdara District (Delhi),D07-702
+South East Delhi,South East Delhi District (Delhi),D07-703
+North West Delhi,North West Delhi District (Delhi),D07-090
+Sambhal,Sambhal District (Uttar Pradesh),D09-754
+Charki Dadri,Charki Dadri District (Haryana),D06-765
+Alipurduar,Alipurduar District (West Bengal),D19-774
+Paschim Bardhaman,Paschim Bardhaman District (West Bengal),D19-777
+Kalimpong,Kalimpong District (West Bengal),D19-775
+Ajmer,Ajmer District (Rajasthan),D08-119
+Cooch Behar,Cooch Behar District (West Bengal),D19-329
+Uttar Dinajpur,Uttar Dinajpur District (West Bengal),D19-330
+Datia,Datia District (Madhya Pradesh),D23-422
+Rajsamand,Rajsamand District (Rajasthan),D08-123
+Mahoba,Mahoba District (Uttar Pradesh),D09-169
+Chhatarpur,Chhatarpur District (Madhya Pradesh),D23-425
+Chittaurgarh,Chittaurgarh District (Rajasthan),D08-126
+Panna,Panna District (Madhya Pradesh),D23-426
+Sabar Kantha,Sabar Kantha District (Gujarat),D24-472
+Kachchh,Kachchh District (Gujarat),D24-468
+Surendranagar,Surendranagar District (Gujarat),D24-475
+Kheda,Kheda District (Gujarat),D24-483
+Anand,Anand District (Gujarat),D24-482
+Kishanganj,Kishanganj District (Bihar),D10-210
+Morbi,Morbi District (Gujarat),D24-727
+Leh,Leh District (Ladakh),D38-003
+Kargil,Kargil District (Ladakh),D38-004
+Kupwara,Kupwara District (Jammu and Kashmir),D01-001
+Bandipore,Bandipore District (Jammu and Kashmir),D01-009
+Baramula,Baramula District (Jammu and Kashmir),D01-008
+Ganderbal,Ganderbal District (Jammu and Kashmir),D01-011
+Anantnag,Anantnag District (Jammu and Kashmir),D01-014
+Kishtwar,Kishtwar District (Jammu and Kashmir),D01-018
+Srinagar,Srinagar District (Jammu and Kashmir),D01-010
+Badgam,Badgam District (Jammu and Kashmir),D01-002
+Pulwama,Pulwama District (Jammu and Kashmir),D01-012
+Punch,Punch District (Jammu and Kashmir),D01-005
+Shupiyan,Shupiyan District (Jammu and Kashmir),D01-013
+Kulgam,Kulgam District (Jammu and Kashmir),D01-015
+Rajouri,Rajouri District (Jammu and Kashmir),D01-006
+Ramban,Ramban District (Jammu and Kashmir),D01-017
+Reasi,Reasi District (Jammu and Kashmir),D01-020
+Doda,Doda District (Jammu and Kashmir),D01-016
+Lahul and Spiti,Lahul and Spiti District (Himachal Pradesh),D02-025
+Chamba,Chamba District (Himachal Pradesh),D02-023
+Jammu,Jammu District (Jammu and Kashmir),D01-021
+Kathua,Kathua District (Jammu and Kashmir),D01-007
+Gurdaspur,Gurdaspur District (Punjab),D03-035
+Kangra,Kangra District (Himachal Pradesh),D02-024
+Kullu,Kullu District (Himachal Pradesh),D02-026
+Hoshiarpur,Hoshiarpur District (Punjab),D03-038
+Amritsar,Amritsar District (Punjab),D03-049
+Mandi,Mandi District (Himachal Pradesh),D02-027
+Kinnaur,Kinnaur District (Himachal Pradesh),D02-034
+Una,Una District (Himachal Pradesh),D02-029
+Shimla,Shimla District (Himachal Pradesh),D02-033
+Jalandhar,Jalandhar District (Punjab),D03-037
+Tarn Taran,Tarn Taran District (Punjab),D03-050
+Rupnagar,Rupnagar District (Punjab),D03-051
+Uttarkashi,Uttarkashi District (Uttarakhand),D05-056
+Solan,Solan District (Himachal Pradesh),D02-031
+Shahid Bhagat Singh Nagar,Shahid Bhagat Singh Nagar District (Punjab),D03-039
+Fazilka,Fazilka District (Punjab),D03-701
+Moga,Moga District (Punjab),D03-042
+Ludhiana,Ludhiana District (Punjab),D03-041
+Chamoli,Chamoli District (Uttarakhand),D05-057
+Dehradun,Dehradun District (Uttarakhand),D05-060
+Sirmaur,Sirmaur District (Himachal Pradesh),D02-032
+S.A.S. Nagar,S.A.S. Nagar District (Punjab),D03-052
+Faridkot,Faridkot District (Punjab),D03-045
+Fatehgarh Sahib,Fatehgarh Sahib District (Punjab),D03-040
+Tehri Garhwal,Tehri Garhwal District (Uttarakhand),D05-059
+Chandigarh,Chandigarh District (Chandigarh),D04-055
+Sri Muktsar Sahib,Sri Muktsar Sahib District (Punjab),D03-044
+Rudraprayag,Rudraprayag District (Uttarakhand),D05-058
+Pithoragarh,Pithoragarh District (Uttarakhand),D05-062
+Sangrur,Sangrur District (Punjab),D03-053
+Barnala,Barnala District (Punjab),D03-054
+Bathinda,Bathinda District (Punjab),D03-046
+Patiala,Patiala District (Punjab),D03-048
+Yamunanagar,Yamunanagar District (Haryana),D06-071
+Saharanpur,Saharanpur District (Uttar Pradesh),D09-132
+Ganganagar,Ganganagar District (Rajasthan),D08-099
+Mansa,Mansa District (Punjab),D03-047
+Kurukshetra,Kurukshetra District (Haryana),D06-072
+Bageshwar,Bageshwar District (Uttarakhand),D05-063
+Haridwar,Haridwar District (Uttarakhand),D05-068
+Pauri Garhwal,Pauri Garhwal District (Uttarakhand),D05-061
+Kaithal,Kaithal District (Haryana),D06-073
+Sirsa,Sirsa District (Haryana),D06-079
+Hanumangarh,Hanumangarh District (Rajasthan),D08-100
+Karnal,Karnal District (Haryana),D06-074
+Almora,Almora District (Uttarakhand),D05-064
+Jind,Jind District (Haryana),D06-077
+Fatehabad,Fatehabad District (Haryana),D06-078
+Bijnor,Bijnor District (Uttar Pradesh),D09-134
+Muzaffarnagar,Muzaffarnagar District (Uttar Pradesh),D09-133
+Hisar,Hisar District (Haryana),D06-080
+Nainital,Nainital District (Uttarakhand),D05-066
+Panipat,Panipat District (Haryana),D06-075
+Champawat,Champawat District (Uttarakhand),D05-065
+Udham Singh Nagar,Udham Singh Nagar District (Uttarakhand),D05-067
+Sonipat,Sonipat District (Haryana),D06-076
+Baghpat,Baghpat District (Uttar Pradesh),D09-139
+Meerut,Meerut District (Uttar Pradesh),D09-138
+Moradabad,Moradabad District (Uttar Pradesh),D09-135
+Bikaner,Bikaner District (Rajasthan),D08-101
+Rampur,Rampur District (Uttar Pradesh),D09-136
+Bhiwani,Bhiwani District (Haryana),D06-081
+Rohtak,Rohtak District (Haryana),D06-082
+Shamli,Shamli District (Uttar Pradesh),D09-704
+Firozpur,Firozpur District (Punjab),D03-043
+Pathankot,Pathankot District (Punjab),D03-773
+Udhampur,Udhampur District (Jammu and Kashmir),D01-019
+Samba,Samba District (Jammu and Kashmir),D01-022
+Kapurthala,Kapurthala District (Punjab),D03-036
+Panchkula,Panchkula District (Haryana),D06-069
+Ambala,Ambala District (Haryana),D06-070
+Balrampur,Balrampur District (Chhattisgarh),D22-716
+Hamirpur,Hamirpur District (Uttar Pradesh),D09-168
+Pratapgarh,Pratapgarh District (Rajasthan),D08-131
+Niwari,Niwari District (Madhya Pradesh),D23-782
+Muzaffarabad,Muzaffarabad District (Jammu and Kashmir),D01-992
+Mirpur,Mirpur District (Jammu and Kashmir),D01-991

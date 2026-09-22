@@ -37,7 +37,12 @@ class Base(DeclarativeBase):
 
 async def init_db():
     """Create all tables on startup."""
-    from database.models import ObservationRecord, LocationCache  # noqa: F401
+    from database.models import (  # noqa: F401
+        ObservationRecord,
+        LocationCache,
+        FloodEvent,
+        SchedulerLockRecord,
+    )
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
