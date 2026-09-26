@@ -137,21 +137,27 @@ def _pre_position_resources(grade: str) -> List[str]:
 
 
 def _contributing_factors(X_row: pd.Series) -> dict:
-    """Simplified factor attribution (production would use SHAP values)."""
+    """
+    Hydrological and model factor attribution for explainable flood risk decisions.
+    """
     factors = {}
-    r24 = X_row.get("rainfall_24h_mm", 0)
-    drain = X_row.get("drainage_capacity_pct", 70)
-    sm = X_row.get("soil_moisture_pct", 30)
-    elev = X_row.get("elevation_m", 15)
-    imp = X_row.get("impervious_surface_pct", 50)
-    river = X_row.get("river_discharge_m3s", 0)
+    r24 = float(X_row.get("rainfall_24h_mm", 0) or 0)
+    drain = float(X_row.get("drainage_capacity_pct", 70) or 70)
+    sm = float(X_row.get("soil_moisture_pct", 30) or 30)
+    elev = float(X_row.get("elevation_m", 15) or 15)
+    imp = float(X_row.get("impervious_surface_pct", 50) or 50)
+    river = float(X_row.get("river_discharge_m3s", 0) or 0)
+    twi = float(X_row.get("topographic_wetness_index", 5.0) or 5.0)
+    drain_stress = float(X_row.get("drainage_stress", 0.5) or 0.5)
 
-    factors["rainfall_24h"] = round(min(r24 / 100, 1.0) * 0.35, 3)
-    factors["drainage_deficit"] = round((1 - drain / 100) * 0.25, 3)
-    factors["soil_saturation"] = round(sm / 100 * 0.20, 3)
-    factors["low_elevation"] = round(max(0, (20 - elev) / 20) * 0.12, 3)
-    factors["imperviousness"] = round(imp / 100 * 0.08, 3)
-    factors["river_discharge"] = round(min(river / 500, 1.0) * 0.15, 3)
+    factors["rainfall_24h"] = round(min(r24 / 100.0, 1.0) * 0.30, 3)
+    factors["drainage_stress"] = round(min(drain_stress / 3.0, 1.0) * 0.22, 3)
+    factors["drainage_deficit"] = round((1.0 - drain / 100.0) * 0.18, 3)
+    factors["soil_saturation"] = round((sm / 100.0) * 0.18, 3)
+    factors["topographic_wetness"] = round(min(max(twi, 0) / 10.0, 1.0) * 0.15, 3)
+    factors["low_elevation"] = round(max(0.0, (20.0 - elev) / 20.0) * 0.12, 3)
+    factors["imperviousness"] = round((imp / 100.0) * 0.08, 3)
+    factors["river_discharge"] = round(min(river / 500.0, 1.0) * 0.12, 3)
     return {k: v for k, v in sorted(factors.items(), key=lambda x: -x[1])}
 
 
@@ -408,34 +414,57 @@ class FloodPredictor:
         except Exception as e:
             logger.warning("Reverse geocoding failed: %s", e)
         
-        # 2. Try matching the town in india_wards.csv
-        csv_path = os.path.join(os.path.dirname(__file__), "..", "..", "..", "india_wards.csv")
-        csv_path = os.path.abspath(csv_path)
+        # 2. Match in india_wards.csv (by town name or geographic proximity)
+        csv_candidates = [
+            os.path.join(os.path.dirname(__file__), "..", "data", "india_wards.csv"),
+            os.path.join(os.path.dirname(__file__), "..", "india_wards.csv"),
+            os.path.join(os.path.dirname(__file__), "india_wards.csv"),
+        ]
+        csv_path = next((os.path.abspath(p) for p in csv_candidates if os.path.exists(p)), None)
         real_wards = []
-        if town_name and os.path.exists(csv_path):
+        if csv_path:
             try:
                 df_wards = pd.read_csv(csv_path)
-                match = df_wards[df_wards["town"].str.lower() == town_name.lower()]
-                if not match.empty:
-                    real_wards = match.to_dict("records")
+                if town_name:
+                    match = df_wards[df_wards["town"].str.lower() == town_name.lower()]
+                    if not match.empty:
+                        real_wards = match.to_dict("records")
+                if not real_wards:
+                    # Geographic proximity match (within radius_km)
+                    df_wards["dist_km"] = np.sqrt(
+                        ((df_wards["lat"] - lat) * 111.32) ** 2 +
+                        ((df_wards["lon"] - lon) * 111.32 * math.cos(math.radians(lat))) ** 2
+                    )
+                    close_wards = df_wards[df_wards["dist_km"] <= radius_km * 1.5]
+                    if not close_wards.empty:
+                        real_wards = close_wards.sort_values("dist_km").to_dict("records")
             except Exception as e:
                 logger.warning("Failed to read india_wards.csv: %s", e)
-        
-        # 3. Generate wards (using real names from CSV if available, distributing them in a grid)
-        idx = 1
-        for i in range(-3, 4):
-            for j in range(-3, 4):
-                wlat = round(lat + i * delta, 5)
-                wlon = round(lon + j * delta, 5)
-                dist = math.sqrt((i * ward_spacing_km) ** 2 + (j * ward_spacing_km) ** 2)
-                if dist <= radius_km:
-                    ward_name = f"Ward {idx}"
-                    ward_id = f"WARD-{idx:03d}"
-                    if real_wards and idx - 1 < len(real_wards):
-                        ward_name = real_wards[idx - 1].get("name", ward_name)
-                        ward_id = str(real_wards[idx - 1].get("code", ward_id))
-                    wards.append((wlat, wlon, ward_id, ward_name))
-                    idx += 1
+
+        # 3. Generate wards: use real ward centroids if matched, else fallback to grid
+        if real_wards:
+            for w in real_wards:
+                wlat = round(float(w.get("lat", lat)), 5)
+                wlon = round(float(w.get("lon", lon)), 5)
+                dist = math.sqrt(((wlat - lat) * 111.32) ** 2 + ((wlon - lon) * 111.32 * math.cos(math.radians(lat))) ** 2)
+                if dist <= radius_km * 1.5:
+                    wards.append((wlat, wlon, str(w.get("code")), str(w.get("name"))))
+
+        if not wards:
+            idx = 1
+            for i in range(-3, 4):
+                for j in range(-3, 4):
+                    wlat = round(lat + i * delta, 5)
+                    wlon = round(lon + j * delta, 5)
+                    dist = math.sqrt((i * ward_spacing_km) ** 2 + (j * ward_spacing_km) ** 2)
+                    if dist <= radius_km:
+                        ward_name = f"Ward {idx}"
+                        ward_id = f"WARD-{idx:03d}"
+                        if real_wards and idx - 1 < len(real_wards):
+                            ward_name = real_wards[idx - 1].get("name", ward_name)
+                            ward_id = str(real_wards[idx - 1].get("code", ward_id))
+                        wards.append((wlat, wlon, ward_id, ward_name))
+                        idx += 1
         return wards
 
     # ──────────────────────────────────────────────────────────────────────────

@@ -1,0 +1,58 @@
+town,code,name,zone,lat,lon,population,drainage_capacity_pct
+Mumbai,MCGM-A,Ward A - Colaba & Fort,South Mumbai,18.9220,72.8347,185000,75.0
+Mumbai,MCGM-B,Ward B - Sandhurst Road,South Mumbai,18.9515,72.8398,127000,60.0
+Mumbai,MCGM-C,Ward C - Marine Lines & Pydhonie,South Mumbai,18.9482,72.8258,166000,65.0
+Mumbai,MCGM-D,Ward D - Grant Road & Malabar Hill,South Mumbai,18.9633,72.8122,346000,70.0
+Mumbai,MCGM-E,Ward E - Byculla & Mazgaon,South Mumbai,18.9750,72.8340,393000,55.0
+Mumbai,MCGM-FN,Ward F/North - Matunga & Sion,Central Mumbai,19.0340,72.8570,529000,45.0
+Mumbai,MCGM-FS,Ward F/South - Parel & Sewri,Central Mumbai,18.9980,72.8420,361000,50.0
+Mumbai,MCGM-GN,Ward G/North - Dharavi & Dadar,Central Mumbai,19.0430,72.8530,599000,40.0
+Mumbai,MCGM-GS,Ward G/South - Worli & Lower Parel,Central Mumbai,19.0080,72.8220,378000,55.0
+Mumbai,MCGM-HE,Ward H/East - Bandra East & Kalina,Western Suburbs,19.0660,72.8520,557000,45.0
+Mumbai,MCGM-HW,Ward H/West - Bandra West & Khar,Western Suburbs,19.0580,72.8330,307000,65.0
+Mumbai,MCGM-KE,Ward K/East - Andheri East,Western Suburbs,19.1170,72.8680,823000,50.0
+Mumbai,MCGM-KW,Ward K/West - Andheri West & Juhu,Western Suburbs,19.1230,72.8360,749000,50.0
+Mumbai,MCGM-L,Ward L - Kurla & Sakinaka,Eastern Suburbs,19.0730,72.8820,902000,35.0
+Mumbai,MCGM-ME,Ward M/East - Govandi & Mankhurd,Eastern Suburbs,19.0550,72.9180,807000,40.0
+Mumbai,MCGM-MW,Ward M/West - Chembur,Eastern Suburbs,19.0620,72.8990,412000,55.0
+Mumbai,MCGM-N,Ward N - Ghatkopar & Vikhroli,Eastern Suburbs,19.0860,72.9090,622000,50.0
+Mumbai,MCGM-PN,Ward P/North - Malad,Western Suburbs,19.1860,72.8480,941000,45.0
+Mumbai,MCGM-PS,Ward P/South - Goregaon,Western Suburbs,19.1550,72.8490,464000,50.0
+Mumbai,MCGM-RC,Ward R/Central - Borivali,Western Suburbs,19.2300,72.8570,562000,60.0
+Mumbai,MCGM-RN,Ward R/North - Dahisar,Western Suburbs,19.2570,72.8590,431000,55.0
+Mumbai,MCGM-RS,Ward R/South - Kandivali,Western Suburbs,19.2060,72.8510,691000,50.0
+Mumbai,MCGM-S,Ward S - Bhandup & Powai,Eastern Suburbs,19.1450,72.9320,743000,45.0
+Mumbai,MCGM-T,Ward T - Mulund,Eastern Suburbs,19.1730,72.9560,341000,60.0
+Chennai,GCC-01,Zone 1 - Thiruvottiyur,North Chennai,13.1600,80.3000,212000,50.0
+Chennai,GCC-02,Zone 2 - Manali,North Chennai,13.1670,80.2600,105000,45.0
+Chennai,GCC-03,Zone 3 - Madhavaram,North Chennai,13.1480,80.2310,160000,50.0
+Chennai,GCC-04,Zone 4 - Tondiarpet,North Chennai,13.1250,80.2890,285000,40.0
+Chennai,GCC-05,Zone 5 - Royapuram,North Chennai,13.1140,80.2940,260000,45.0
+Chennai,GCC-06,Zone 6 - Thiru-Vi-Ka Nagar,Central Chennai,13.1070,80.2460,310000,40.0
+Chennai,GCC-07,Zone 7 - Ambattur,West Chennai,13.1140,80.1540,460000,45.0
+Chennai,GCC-08,Zone 8 - Anna Nagar,Central Chennai,13.0850,80.2100,320000,60.0
+Chennai,GCC-09,Zone 9 - Teynampet,Central Chennai,13.0400,80.2500,335000,50.0
+Chennai,GCC-10,Zone 10 - Kodambakkam,South Chennai,13.0520,80.2250,370000,45.0
+Chennai,GCC-11,Zone 11 - Valasaravakkam,West Chennai,13.0400,80.1700,240000,45.0
+Chennai,GCC-12,Zone 12 - Alandur,South Chennai,12.9970,80.2010,215000,50.0
+Chennai,GCC-13,Zone 13 - Adyar,South Chennai,13.0010,80.2560,290000,55.0
+Chennai,GCC-14,Zone 14 - Perungudi,South Chennai,12.9650,80.2460,220000,35.0
+Chennai,GCC-15,Zone 15 - Sholinganallur,South Chennai,12.9010,80.2280,230000,35.0
+Delhi,MCD-01,Central Zone - Daryaganj,Central Delhi,28.6430,77.2410,580000,50.0
+Delhi,MCD-02,City SP Zone - Paharganj,Old Delhi,28.6450,77.2150,490000,45.0
+Delhi,MCD-03,Civil Lines Zone - Kashmere Gate,North Delhi,28.6720,77.2280,620000,35.0
+Delhi,MCD-04,Karol Bagh Zone - Rajendra Nagar,Central Delhi,28.6510,77.1900,510000,55.0
+Delhi,MCD-05,Shahdara South - Laxmi Nagar,East Delhi,28.6300,77.2780,820000,35.0
+Delhi,MCD-06,Shahdara North - Seelampur,East Delhi,28.6700,77.2700,950000,35.0
+Delhi,MCD-07,South Zone - Hauz Khas & Saket,South Delhi,28.5490,77.2060,710000,60.0
+Delhi,MCD-08,West Zone - Rajouri Garden,West Delhi,28.6420,77.1210,790000,55.0
+Delhi,MCD-09,Najafgarh Zone - Dwarka,South West Delhi,28.5920,77.0460,880000,50.0
+Delhi,MCD-10,Rohini Zone - Pitampura,North West Delhi,28.7040,77.1020,930000,50.0
+Bengaluru,BBMP-01,Yelahanka Zone,North Bengaluru,13.1000,77.5960,420000,50.0
+Bengaluru,BBMP-02,Dasarahalli Zone,North-West Bengaluru,13.0440,77.5130,380000,45.0
+Bengaluru,BBMP-03,Rajarajeshwari Nagar Zone,West Bengaluru,12.9270,77.5150,490000,50.0
+Bengaluru,BBMP-04,Bommanahalli Zone,South Bengaluru,12.9030,77.6250,560000,40.0
+Bengaluru,BBMP-05,South Zone - Jayanagar & Basavanagudi,Central South Bengaluru,12.9300,77.5800,680000,60.0
+Bengaluru,BBMP-06,East Zone - Indiranagar & Frazer Town,East Bengaluru,12.9780,77.6400,620000,55.0
+Bengaluru,BBMP-07,Mahadevapura Zone - Whitefield & Bellandur,East Bengaluru,12.9860,77.7120,710000,35.0
+Bengaluru,BBMP-08,West Zone - Malleshwaram & Rajajinagar,Central West Bengaluru,13.0030,77.5700,740000,55.0
