@@ -1,0 +1,24 @@
+event_id,city,ward_code,date,lat,lon,rainfall_24h_mm,inundation_depth_m,duration_hours,area_flooded_km2,source,verified
+EVT-MUM-2005-01,Mumbai,MCGM-L,2005-07-26,19.0730,72.8820,944.0,2.80,36.0,8.5,MCGM/BMC Disaster Management Cell,true
+EVT-MUM-2005-02,Mumbai,MCGM-FN,2005-07-26,19.0340,72.8570,880.0,2.10,28.0,5.2,MCGM/BMC Disaster Management Cell,true
+EVT-MUM-2005-03,Mumbai,MCGM-GN,2005-07-26,19.0430,72.8530,720.0,1.90,24.0,6.0,MCGM/BMC Disaster Management Cell,true
+EVT-MUM-2005-04,Mumbai,MCGM-KE,2005-07-26,19.1170,72.8680,680.0,2.20,20.0,4.8,MCGM/BMC Disaster Management Cell,true
+EVT-MUM-2017-01,Mumbai,MCGM-FS,2017-08-29,19.0020,72.8420,331.4,1.40,14.0,3.5,MCGM Central Control Room,true
+EVT-MUM-2017-02,Mumbai,MCGM-GN,2017-08-29,19.0430,72.8530,315.0,1.20,12.0,4.0,MCGM Central Control Room,true
+EVT-MUM-2017-03,Mumbai,MCGM-L,2017-08-29,19.0730,72.8820,340.0,1.60,16.0,5.0,MCGM Central Control Room,true
+EVT-MUM-2017-04,Mumbai,MCGM-KW,2017-08-29,19.1230,72.8360,280.0,1.10,8.0,2.8,MCGM Central Control Room,true
+EVT-MUM-2019-01,Mumbai,MCGM-PN,2019-07-02,19.1860,72.8480,375.2,1.80,18.0,4.2,IMD Santacruz / MCGM,true
+EVT-MUM-2019-02,Mumbai,MCGM-ME,2019-07-02,19.0550,72.9180,320.0,1.30,12.0,3.0,IMD / MCGM,true
+EVT-MUM-2020-01,Mumbai,MCGM-A,2020-08-05,18.9220,72.8347,293.8,1.25,10.0,2.5,MCGM / IMD Colaba,true
+EVT-MUM-2020-02,Mumbai,MCGM-D,2020-08-05,18.9633,72.8122,305.0,1.10,8.0,1.8,MCGM / IMD Colaba,true
+EVT-MUM-2021-01,Mumbai,MCGM-MW,2021-07-18,19.0620,72.8990,253.0,1.60,12.0,3.2,MCGM Disaster Management Cell,true
+EVT-MUM-2021-02,Mumbai,MCGM-N,2021-07-18,19.0860,72.9090,235.0,1.40,10.0,2.7,MCGM Disaster Management Cell,true
+EVT-CHN-2015-01,Chennai,GCC-13,2015-12-01,13.0010,80.2560,490.0,2.50,48.0,12.0,Greater Chennai Corporation / TN SDMA,true
+EVT-CHN-2015-02,Chennai,GCC-14,2015-12-01,12.9650,80.2460,450.0,2.30,40.0,9.0,Greater Chennai Corporation / TN SDMA,true
+EVT-CHN-2015-03,Chennai,GCC-10,2015-12-01,13.0520,80.2250,380.0,1.80,32.0,6.5,Greater Chennai Corporation,true
+EVT-CHN-2021-01,Chennai,GCC-09,2021-11-07,13.0400,80.2500,215.0,1.10,14.0,4.0,Greater Chennai Corporation,true
+EVT-CHN-2021-02,Chennai,GCC-06,2021-11-07,13.1070,80.2460,230.0,1.35,16.0,3.8,Greater Chennai Corporation,true
+EVT-DEL-2023-01,Delhi,MCD-03,2023-07-13,28.6720,77.2280,153.0,1.75,36.0,7.5,Delhi Disaster Management Authority,true
+EVT-DEL-2023-02,Delhi,MCD-01,2023-07-13,28.6430,77.2410,142.0,1.20,24.0,4.2,Delhi Disaster Management Authority,true
+EVT-BLR-2022-01,Bengaluru,BBMP-07,2022-09-05,12.9860,77.7120,131.6,1.40,24.0,8.0,BBMP / Karnataka State Natural Disaster Monitoring Centre,true
+EVT-BLR-2022-02,Bengaluru,BBMP-04,2022-09-05,12.9030,77.6250,125.0,1.10,18.0,5.5,BBMP / KSNDMC,true

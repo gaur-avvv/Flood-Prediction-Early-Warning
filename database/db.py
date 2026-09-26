@@ -36,10 +36,43 @@ class Base(DeclarativeBase):
 
 
 async def init_db():
-    """Create all tables on startup."""
-    from database.models import ObservationRecord, LocationCache  # noqa: F401
+    """Create all tables on startup and seed historical events if empty."""
+    from database.models import ObservationRecord, LocationCache, FloodEvent  # noqa: F401
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+
+    # Seed historical flood events from CSV if table is empty
+    csv_candidates = [
+        os.path.join(os.path.dirname(__file__), "..", "data", "historical_flood_events.csv"),
+        os.path.join(os.path.dirname(__file__), "historical_flood_events.csv"),
+    ]
+    csv_file = next((p for p in csv_candidates if os.path.exists(p)), None)
+    if csv_file:
+        from sqlalchemy import select, func
+        import pandas as pd
+        from datetime import datetime
+        async with get_session() as session:
+            count = (await session.execute(select(func.count(FloodEvent.id)))).scalar_one_or_none() or 0
+            if count == 0:
+                df_events = pd.read_csv(csv_file)
+                records = []
+                for _, row in df_events.iterrows():
+                    records.append(
+                        FloodEvent(
+                            lat=float(row["lat"]),
+                            lon=float(row["lon"]),
+                            event_date=datetime.strptime(str(row["date"]).strip(), "%Y-%m-%d"),
+                            ward_id=str(row["ward_code"]),
+                            inundation_depth_m=float(row["inundation_depth_m"]),
+                            area_flooded_km2=float(row.get("area_flooded_km2", 1.0)),
+                            duration_hours=float(row.get("duration_hours", 12.0)),
+                            source=str(row.get("source", "historical_record")),
+                            verified=bool(row.get("verified", True)),
+                        )
+                    )
+                session.add_all(records)
+                await session.commit()
+
 
 
 @asynccontextmanager
