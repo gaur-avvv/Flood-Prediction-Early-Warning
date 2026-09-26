@@ -210,10 +210,17 @@ class TrainingStatusResponse(BaseModel):
     message: Optional[str] = None
     trained: Optional[bool] = None
     accuracy: Optional[float] = None
+    precision: Optional[float] = None
+    recall: Optional[float] = None
     f1_score: Optional[float] = None
     roc_auc: Optional[float] = None
+    brier_score: Optional[float] = None
+    confusion_matrix: Optional[List[List[int]]] = None
+    mae_depth: Optional[float] = None
+    rmse_depth: Optional[float] = None
     last_trained: Optional[datetime] = None
     training_samples: Optional[int] = None
+    test_samples: Optional[int] = None
     hotspots_mapped: Optional[int] = None
     feature_importances: Optional[dict] = None
 
@@ -221,10 +228,13 @@ class TrainingStatusResponse(BaseModel):
 class HealthResponse(BaseModel):
     status: str
     model_trained: bool
-    model_accuracy: Optional[float]
-    last_trained: Optional[datetime]
-    hotspots_mapped: int
-    version: str
+    model_accuracy: Optional[float] = None
+    model_f1: Optional[float] = None
+    model_auc: Optional[float] = None
+    model_mae_depth: Optional[float] = None
+    last_trained: Optional[datetime] = None
+    hotspots_mapped: int = 0
+    version: str = "2.0.0"
 
 
 # ─── Email Alert ─────────────────────────────────────────────────────────────

@@ -109,16 +109,23 @@ class ModelTrainer:
                     "message": "Training complete",
                     "trained": True,
                     "accuracy": meta.accuracy,
+                    "precision": meta.precision,
+                    "recall": meta.recall,
                     "f1_score": meta.f1,
                     "roc_auc": meta.roc_auc,
+                    "brier_score": meta.brier_score,
+                    "confusion_matrix": meta.confusion_matrix,
+                    "mae_depth": meta.mae_depth,
+                    "rmse_depth": meta.rmse_depth,
                     "last_trained": meta.last_trained,
                     "training_samples": meta.training_samples,
+                    "test_samples": meta.test_samples,
                     "hotspots_mapped": meta.hotspots_mapped,
                     "feature_importances": meta.feature_importances,
                 }
                 logger.info(
-                    "✅ Training done: acc=%.3f  f1=%.3f  auc=%.3f",
-                    meta.accuracy, meta.f1, meta.roc_auc,
+                    "✅ Training complete: acc=%.4f  prec=%.4f  rec=%.4f  f1=%.4f  auc=%.4f  brier=%.4f",
+                    meta.accuracy, meta.precision, meta.recall, meta.f1, meta.roc_auc, meta.brier_score,
                 )
 
             except Exception as e:
@@ -161,13 +168,20 @@ class ModelTrainer:
                 "status": self._status.get("status", "completed"),
                 "message": self._status.get("message", "Model ready"),
                 "trained": True,
-                "accuracy": m.accuracy,
-                "f1_score": m.f1,
-                "roc_auc": m.roc_auc,
-                "last_trained": m.last_trained,
-                "training_samples": m.training_samples,
-                "hotspots_mapped": m.hotspots_mapped,
-                "feature_importances": m.feature_importances,
+                "accuracy": getattr(m, "accuracy", 0.0),
+                "precision": getattr(m, "precision", 0.0),
+                "recall": getattr(m, "recall", 0.0),
+                "f1_score": getattr(m, "f1", 0.0),
+                "roc_auc": getattr(m, "roc_auc", 0.0),
+                "brier_score": getattr(m, "brier_score", 0.0),
+                "confusion_matrix": getattr(m, "confusion_matrix", []),
+                "mae_depth": getattr(m, "mae_depth", 0.0),
+                "rmse_depth": getattr(m, "rmse_depth", 0.0),
+                "last_trained": getattr(m, "last_trained", None),
+                "training_samples": getattr(m, "training_samples", 0),
+                "test_samples": getattr(m, "test_samples", 0),
+                "hotspots_mapped": getattr(m, "hotspots_mapped", 0),
+                "feature_importances": getattr(m, "feature_importances", {}),
             }
         return self._status
 
