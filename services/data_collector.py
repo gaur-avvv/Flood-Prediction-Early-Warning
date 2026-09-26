@@ -13,6 +13,7 @@ infrastructure data for a location using open-access APIs:
 import asyncio
 import logging
 import math
+import os
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
 
@@ -223,8 +224,10 @@ class DataCollector:
                 data = resp.json()
 
             daily = data.get("daily", {})
+            times = daily.get("time", [])
+            dates = pd.to_datetime(times).date if len(times) > 0 else []
             df = pd.DataFrame({
-                "date": pd.to_datetime(daily.get("time", [])).dt.date,
+                "date": dates,
                 "river_discharge_m3s": daily.get("river_discharge", []),
             })
             df["river_discharge_m3s"] = df["river_discharge_m3s"].fillna(0.0)
@@ -328,9 +331,13 @@ class DataCollector:
         );
         out count;
         """
+        headers = {
+            "User-Agent": "BioSentinelX-App/2.0 (urban-flood-research)",
+            "Accept": "application/json",
+        }
         try:
-            async with httpx.AsyncClient(timeout=self._client_timeout) as client:
-                resp = await client.post(OVERPASS_URL, data=query)
+            async with httpx.AsyncClient(timeout=self._client_timeout, headers=headers) as client:
+                resp = await client.post(OVERPASS_URL, data={"data": query})
                 resp.raise_for_status()
                 data = resp.json()
             total = data.get("elements", [{}])[0].get("tags", {})
@@ -466,7 +473,57 @@ class DataCollector:
             (df["rainfall_24h_mm"] / 100.0 * (1.0 - effective_cap)).clip(0, 3)
         )
 
+        # Overlay verified empirical flood events from municipal datasets if available
+        df = self._overlay_empirical_flood_events(df, lat, lon)
+
         return df.dropna(subset=["rainfall_1h_mm"])
+
+    def _overlay_empirical_flood_events(
+        self, df: pd.DataFrame, lat: float, lon: float, radius_km: float = 30.0
+    ) -> pd.DataFrame:
+        """
+        Check for verified empirical historical flood events within radius and overlay them.
+        Prioritizes real-world municipal observations (e.g. BMC/MCGM Mumbai, GCC Chennai)
+        over synthetic heuristics.
+        """
+        csv_candidates = [
+            os.path.join(os.path.dirname(__file__), "..", "data", "historical_flood_events.csv"),
+            os.path.join(os.path.dirname(__file__), "historical_flood_events.csv"),
+        ]
+        csv_path = next((p for p in csv_candidates if os.path.exists(p)), None)
+        if not csv_path:
+            return df
+
+        try:
+            events_df = pd.read_csv(csv_path)
+            delta_deg = radius_km / 111.0
+            nearby = events_df[
+                (events_df["lat"].between(lat - delta_deg, lat + delta_deg)) &
+                (events_df["lon"].between(lon - delta_deg, lon + delta_deg))
+            ]
+            if nearby.empty:
+                return df
+
+            # Parse event dates
+            nearby["event_date"] = pd.to_datetime(nearby["date"]).dt.date
+            df_dates = pd.to_datetime(df["date_time"]).dt.date
+
+            for _, evt in nearby.iterrows():
+                evt_date = evt["event_date"]
+                mask = df_dates == evt_date
+                if mask.any():
+                    df.loc[mask, "flood_occurred"] = 1
+                    recorded_depth = float(evt.get("inundation_depth_m", 0.5))
+                    df.loc[mask, "inundation_depth_m"] = np.maximum(
+                        df.loc[mask, "inundation_depth_m"], recorded_depth
+                    )
+                    logger.info(
+                        "Overlaid empirical historical flood %s on %s (recorded depth: %.2fm)",
+                        evt.get("event_id"), evt_date, recorded_depth,
+                    )
+        except Exception as exc:
+            logger.warning("Failed to overlay empirical flood events: %s", exc)
+        return df
 
     def _synthetic_flood_labels(self, df: pd.DataFrame) -> pd.Series:
         """
