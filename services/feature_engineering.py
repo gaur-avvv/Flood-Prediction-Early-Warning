@@ -115,12 +115,24 @@ def build_feature_vector(req: PredictionRequest) -> pd.DataFrame:
         0.10 * (req.previous_flood_events_5y / max(req.previous_flood_events_5y + 1, 1)) * 10
     )
 
+    # Topographic Wetness Index (TWI): ln(a / tan(beta))
+    slope_rad = np.radians(max(req.slope_degrees, 0.1))
+    twi = np.log((req.flow_accumulation + 1.0) / (np.tan(slope_rad) + 0.01))
+
+    # Compound Hazard Index: Co-occurring heavy precipitation + discharge anomaly + saturated soil
+    compound_hazard = min(
+        10.0,
+        (req.rainfall_24h_mm / 100.0) * (1.0 + req.discharge_anomaly_ratio) * (req.soil_moisture_pct / 50.0)
+    )
+
     base.update(
         {
             "rain_accumulation_ratio": round(rain_acc_ratio, 6),
             "runoff_coefficient": round(runoff_coeff, 6),
             "drainage_stress": round(drainage_stress, 6),
             "terrain_vulnerability": round(float(terrain_vuln), 6),
+            "topographic_wetness_index": round(float(twi), 6),
+            "compound_hazard_index": round(float(compound_hazard), 6),
             "composite_risk_index": round(composite, 6),
         }
     )
@@ -169,10 +181,21 @@ def engineer_training_features(df: pd.DataFrame) -> pd.DataFrame:
         0.10 * (df["previous_flood_events_5y"] / (df["previous_flood_events_5y"] + 1)) * 10
     )
 
+    # Topographic Wetness Index (TWI)
+    slope_rad = np.radians(df["slope_degrees"].clip(lower=0.1))
+    df["topographic_wetness_index"] = np.log((df["flow_accumulation"] + 1.0) / (np.tan(slope_rad) + 0.01))
+
     # Ensure river discharge columns exist with safe defaults if not in training data
     if "river_discharge_m3s" not in df.columns:
         df["river_discharge_m3s"] = 0.0
     if "discharge_anomaly_ratio" not in df.columns:
         df["discharge_anomaly_ratio"] = 0.0
+
+    # Compound Hazard Index
+    df["compound_hazard_index"] = (
+        (df["rainfall_24h_mm"] / 100.0) *
+        (1.0 + df["discharge_anomaly_ratio"]) *
+        (df["soil_moisture_pct"] / 50.0)
+    ).clip(upper=10.0)
 
     return df[FEATURE_COLUMNS]
