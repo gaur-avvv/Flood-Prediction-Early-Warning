@@ -13,6 +13,7 @@ infrastructure data for a location using open-access APIs:
 import asyncio
 import logging
 import math
+import os
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
 
@@ -223,8 +224,10 @@ class DataCollector:
                 data = resp.json()
 
             daily = data.get("daily", {})
+            times = daily.get("time", [])
+            dates = pd.to_datetime(times).date if len(times) > 0 else []
             df = pd.DataFrame({
-                "date": pd.to_datetime(daily.get("time", [])).dt.date,
+                "date": dates,
                 "river_discharge_m3s": daily.get("river_discharge", []),
             })
             df["river_discharge_m3s"] = df["river_discharge_m3s"].fillna(0.0)
@@ -328,9 +331,13 @@ class DataCollector:
         );
         out count;
         """
+        headers = {
+            "User-Agent": "BioSentinelX-App/2.0 (urban-flood-research)",
+            "Accept": "application/json",
+        }
         try:
-            async with httpx.AsyncClient(timeout=self._client_timeout) as client:
-                resp = await client.post(OVERPASS_URL, data=query)
+            async with httpx.AsyncClient(timeout=self._client_timeout, headers=headers) as client:
+                resp = await client.post(OVERPASS_URL, data={"data": query})
                 resp.raise_for_status()
                 data = resp.json()
             total = data.get("elements", [{}])[0].get("tags", {})
