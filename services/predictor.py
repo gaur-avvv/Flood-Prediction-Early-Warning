@@ -137,21 +137,27 @@ def _pre_position_resources(grade: str) -> List[str]:
 
 
 def _contributing_factors(X_row: pd.Series) -> dict:
-    """Simplified factor attribution (production would use SHAP values)."""
+    """
+    Hydrological and model factor attribution for explainable flood risk decisions.
+    """
     factors = {}
-    r24 = X_row.get("rainfall_24h_mm", 0)
-    drain = X_row.get("drainage_capacity_pct", 70)
-    sm = X_row.get("soil_moisture_pct", 30)
-    elev = X_row.get("elevation_m", 15)
-    imp = X_row.get("impervious_surface_pct", 50)
-    river = X_row.get("river_discharge_m3s", 0)
+    r24 = float(X_row.get("rainfall_24h_mm", 0) or 0)
+    drain = float(X_row.get("drainage_capacity_pct", 70) or 70)
+    sm = float(X_row.get("soil_moisture_pct", 30) or 30)
+    elev = float(X_row.get("elevation_m", 15) or 15)
+    imp = float(X_row.get("impervious_surface_pct", 50) or 50)
+    river = float(X_row.get("river_discharge_m3s", 0) or 0)
+    twi = float(X_row.get("topographic_wetness_index", 5.0) or 5.0)
+    drain_stress = float(X_row.get("drainage_stress", 0.5) or 0.5)
 
-    factors["rainfall_24h"] = round(min(r24 / 100, 1.0) * 0.35, 3)
-    factors["drainage_deficit"] = round((1 - drain / 100) * 0.25, 3)
-    factors["soil_saturation"] = round(sm / 100 * 0.20, 3)
-    factors["low_elevation"] = round(max(0, (20 - elev) / 20) * 0.12, 3)
-    factors["imperviousness"] = round(imp / 100 * 0.08, 3)
-    factors["river_discharge"] = round(min(river / 500, 1.0) * 0.15, 3)
+    factors["rainfall_24h"] = round(min(r24 / 100.0, 1.0) * 0.30, 3)
+    factors["drainage_stress"] = round(min(drain_stress / 3.0, 1.0) * 0.22, 3)
+    factors["drainage_deficit"] = round((1.0 - drain / 100.0) * 0.18, 3)
+    factors["soil_saturation"] = round((sm / 100.0) * 0.18, 3)
+    factors["topographic_wetness"] = round(min(max(twi, 0) / 10.0, 1.0) * 0.15, 3)
+    factors["low_elevation"] = round(max(0.0, (20.0 - elev) / 20.0) * 0.12, 3)
+    factors["imperviousness"] = round((imp / 100.0) * 0.08, 3)
+    factors["river_discharge"] = round(min(river / 500.0, 1.0) * 0.12, 3)
     return {k: v for k, v in sorted(factors.items(), key=lambda x: -x[1])}
 
 
