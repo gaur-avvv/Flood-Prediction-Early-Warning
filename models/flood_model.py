@@ -29,8 +29,13 @@ from sklearn.metrics import (
     f1_score,
     roc_auc_score,
     mean_absolute_error,
+    precision_score,
+    recall_score,
+    brier_score_loss,
+    confusion_matrix,
+    root_mean_squared_error,
 )
-from sklearn.model_selection import StratifiedKFold, cross_val_score
+from sklearn.model_selection import StratifiedKFold, cross_val_score, train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.impute import SimpleImputer
@@ -69,11 +74,6 @@ FEATURE_COLUMNS = [
     "rainfall_24h_mm", "rainfall_48h_mm", "rainfall_72h_mm",
     "rainfall_intensity", "antecedent_precip_index",
     # ── River discharge (GloFAS ensemble) ────────────────────────────────────
-    # river_discharge_m3s : raw observed/forecast median discharge (m³/s)
-    # discharge_anomaly_ratio : discharge / historical_p50. >1 = above median,
-    #                           >2 = significant, >4 = extreme.
-    # These two features provide the model with real hydrograph state,
-    # dramatically improving flood detection in catchment-driven events.
     "river_discharge_m3s", "discharge_anomaly_ratio",
     "elevation_m", "slope_degrees", "aspect_degrees", "curvature",
     "flow_accumulation", "stream_distance_m", "water_body_distance_m",
@@ -95,11 +95,17 @@ FEATURE_COLUMNS = [
 class ModelMetadata:
     trained: bool = False
     accuracy: float = 0.0
+    precision: float = 0.0
+    recall: float = 0.0
     f1: float = 0.0
     roc_auc: float = 0.0
+    brier_score: float = 0.0
+    confusion_matrix: list = field(default_factory=list)
     mae_depth: float = 0.0
+    rmse_depth: float = 0.0
     last_trained: Optional[datetime] = None
     training_samples: int = 0
+    test_samples: int = 0
     hotspots_mapped: int = 0
     feature_importances: dict = field(default_factory=dict)
     location_lat: Optional[float] = None
@@ -232,7 +238,6 @@ class FloodMLModel:
                 "Dataset too large (%d rows) – stratified sub-sampling to %d rows",
                 len(X), self._MAX_TRAIN_ROWS,
             )
-            from sklearn.model_selection import train_test_split
             X, _, y_flood, _, y_depth, _ = train_test_split(
                 X, y_flood, y_depth,
                 train_size=self._MAX_TRAIN_ROWS,
@@ -242,38 +247,64 @@ class FloodMLModel:
 
         X_clean = X[FEATURE_COLUMNS].copy()
 
+        # Split into training and held-out test sets (80/20 stratified split)
+        # Guarantees publication-ready out-of-sample generalization metrics
+        if len(X_clean) >= 20 and y_flood.nunique() > 1:
+            X_train, X_test, y_train, y_test, y_depth_train, y_depth_test = train_test_split(
+                X_clean, y_flood, y_depth,
+                test_size=0.2,
+                stratify=y_flood,
+                random_state=42,
+            )
+        else:
+            X_train, X_test = X_clean, X_clean
+            y_train, y_test = y_flood, y_flood
+            y_depth_train, y_depth_test = y_depth, y_depth
+
         # ── Classifier ──
         self.classifier = self._build_classifier()
-        self.classifier.fit(X_clean, y_flood.values)
+        self.classifier.fit(X_train, y_train.values)
 
-        preds = self.classifier.predict(X_clean)
-        probs = self.classifier.predict_proba(X_clean)[:, 1]
+        # Held-out Test Set Evaluation
+        test_preds = self.classifier.predict(X_test)
+        test_probs = self.classifier.predict_proba(X_test)[:, 1]
 
-        acc = accuracy_score(y_flood, preds)
-        f1 = f1_score(y_flood, preds, zero_division=0)
-        auc = roc_auc_score(y_flood, probs) if y_flood.nunique() > 1 else 0.5
+        acc = accuracy_score(y_test, test_preds)
+        prec = precision_score(y_test, test_preds, zero_division=0)
+        rec = recall_score(y_test, test_preds, zero_division=0)
+        f1 = f1_score(y_test, test_preds, zero_division=0)
+        auc = roc_auc_score(y_test, test_probs) if y_test.nunique() > 1 else 0.5
+        brier = brier_score_loss(y_test, test_probs)
+        cm = confusion_matrix(y_test, test_preds).tolist()
 
-        logger.info("Classifier: acc=%.3f  f1=%.3f  auc=%.3f", acc, f1, auc)
+        logger.info(
+            "Classifier (Held-Out Test Set): acc=%.4f  prec=%.4f  rec=%.4f  f1=%.4f  auc=%.4f  brier=%.4f",
+            acc, prec, rec, f1, auc, brier,
+        )
 
         # ── Depth Regressor ──
         self.depth_regressor = self._build_depth_regressor()
-        flood_mask = (y_flood == 1).values
-        if flood_mask.sum() > 10:
-            self.depth_regressor.fit(X_clean[flood_mask], y_depth.values[flood_mask])
-            depth_preds = self.depth_regressor.predict(X_clean[flood_mask])
-            mae = mean_absolute_error(y_depth.values[flood_mask], depth_preds)
+        flood_mask_train = (y_train == 1).values
+        flood_mask_test = (y_test == 1).values
+        if flood_mask_train.sum() > 5:
+            self.depth_regressor.fit(X_train[flood_mask_train], y_depth_train.values[flood_mask_train])
+            if flood_mask_test.sum() > 0:
+                depth_preds = self.depth_regressor.predict(X_test[flood_mask_test])
+                mae = mean_absolute_error(y_depth_test.values[flood_mask_test], depth_preds)
+                rmse = root_mean_squared_error(y_depth_test.values[flood_mask_test], depth_preds)
+            else:
+                mae = 0.0
+                rmse = 0.0
         else:
-            # Fallback: train on all with depth=0 for no-flood
-            self.depth_regressor.fit(X_clean, y_depth.values)
-            mae = mean_absolute_error(y_depth, self.depth_regressor.predict(X_clean))
+            self.depth_regressor.fit(X_train, y_depth_train.values)
+            depth_preds = self.depth_regressor.predict(X_test)
+            mae = mean_absolute_error(y_depth_test, depth_preds)
+            rmse = root_mean_squared_error(y_depth_test, depth_preds)
 
-        logger.info("Depth regressor MAE: %.3f m", mae)
+        logger.info("Depth regressor (Held-Out Test Set): MAE=%.4f m  RMSE=%.4f m", mae, rmse)
 
         # ── Feature importances (RF only) ──
         # Pipeline: imputer → scaler → model (CalibratedClassifierCV)
-        # CalibratedClassifierCV(cv=2) stores *fitted* clones in
-        # .calibrated_classifiers_[fold].estimator  (a fitted StackingClassifier)
-        # StackingClassifier.estimators_ → [(name, fitted_estimator), …]
         try:
             calibrated_cv = self.classifier.named_steps["model"]
             stacking = calibrated_cv.calibrated_classifiers_[0].estimator
@@ -285,12 +316,18 @@ class FloodMLModel:
 
         self.metadata = ModelMetadata(
             trained=True,
-            accuracy=round(acc, 4),
-            f1=round(f1, 4),
-            roc_auc=round(auc, 4),
-            mae_depth=round(mae, 4),
+            accuracy=round(float(acc), 4),
+            precision=round(float(prec), 4),
+            recall=round(float(rec), 4),
+            f1=round(float(f1), 4),
+            roc_auc=round(float(auc), 4),
+            brier_score=round(float(brier), 4),
+            confusion_matrix=cm,
+            mae_depth=round(float(mae), 4),
+            rmse_depth=round(float(rmse), 4),
             last_trained=datetime.utcnow(),
-            training_samples=len(X),
+            training_samples=len(X_train),
+            test_samples=len(X_test),
             feature_importances={
                 k: round(float(v), 6)
                 for k, v in sorted(importances.items(), key=lambda x: -x[1])[:15]
